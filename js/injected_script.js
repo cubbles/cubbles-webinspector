@@ -3,30 +3,61 @@
   var membersDefs = {};
   var slotsDefs = {};
   var connectionDefs = [];
+  var defsReady;
+  var rootDepsReady;
+  var baseUrlReady;
 
   if (window.cubx && window.cubx.CRC && window.cubx.CRC._root.Context &&
     window.cubx.CRC._root.Context._connectionMgr &&
     window.cubx.CRC._root.Context._connectionMgr._connections) {
     postDefinitions();
-  } else {
+    defsReady = true;
+  }
+  if (window.cubx && window.cubx.CRCInit && window.cubx.CRCInit.rootDependencies) {
+    postRootDeps();
+    rootDepsReady = true;
+  }
+  if (window.cubx && window.cubx.CRC && window.cubx.CRC._baseUrl) {
+    postBaseUrl();
+    baseUrlReady = true;
+  }
+  if (!defsReady || !rootDepsReady || !baseUrlReady) {
     document.addEventListener('cifReady', function () {
-      postDefinitions();
+      if (!defsReady) {
+        postDefinitions();
+      }
+      if (!rootDepsReady) {
+        postRootDeps();
+      }
+      if (!baseUrlReady) {
+        postBaseUrl();
+      }
     });
   }
 
+  function postMessage (name, content) {
+    window.postMessage({ name: name, content: content, source: 'cubbles-webinspector' }, '*');
+  }
+
+  function postRootDeps () {
+    postMessage('set-root-deps', window.cubx.CRCInit.rootDependencies);
+  }
+
+  function postBaseUrl () {
+    var a = document.createElement('a');
+    a.href = window.cubx.CRC._baseUrl;
+    postMessage('set-base-url', a.href);
+  }
+
   /**
-   * Method to be called when 'button' is clicked
+   * Post the definitions of the current page
    */
   function postDefinitions () {
     componentsDefs = {};
     membersDefs = {};
     slotsDefs = {};
     connectionDefs = [];
-    window.postMessage({
-      name: 'set-definitions',
-      definitions: _getDefsFromConnections(window.cubx.CRC._root.Context._connectionMgr._connections),
-      source: 'cubbles-webinspector'
-    }, '*');
+    postMessage('set-definitions', _getDefsFromConnections(window.cubx.CRC._root.Context._connectionMgr._connections));
   }
 
   /**

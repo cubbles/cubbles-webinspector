@@ -8,6 +8,10 @@ window.cubx = {
       {
         webpackageId: 'cubx-generic-component-viewer@1.1.1',
         artifactId: 'cubx-generic-component-viewer'
+      },
+      {
+        webpackageId: 'dep-tree-viewer@1.1.1-SNAPSHOT',
+        artifactId: 'cubx-deps-tree-viewer'
       }
     ]
   }

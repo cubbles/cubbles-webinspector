@@ -11,6 +11,23 @@
 </head>
 
 <body>
-<cubx-generic-component-viewer cubx-webpackage-id="cubx-generic-component-viewer@1.1.1"></cubx-generic-component-viewer>
+<div class="container">
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" id="componentViewerT" href="#componentViewerD">Interface/Dataflow view</a></li>
+        <li><a data-toggle="tab" id="depsTreeViewerT" href="#depsTreeViewerD">Dependency Tree</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="componentViewerD"  class="tab-pane fade in active">
+            <cubx-generic-component-viewer cubx-webpackage-id="cubx-generic-component-viewer@1.1.1"></cubx-generic-component-viewer>
+        </div>
+        <div id="depsTreeViewerD" class="tab-pane fade">
+            <cubx-deps-tree-viewer cubx-webpackage-id="dep-tree-viewer@1.1.1-SNAPSHOT">
+                <cubx-core-init style="display:none">
+                    <cubx-core-slot-init slot="showTitle">true</cubx-core-slot-init>
+                </cubx-core-init>
+            </cubx-deps-tree-viewer>
+        </div>
+    </div>
+</div>
 </body>
 </html>

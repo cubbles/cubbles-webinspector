@@ -1,21 +1,19 @@
 /* globals chrome */
 var connections = {};
 
+// TODO: check how to use it
 function sendMessageToTab (tabId, message, responseCb) {
   chrome.tabs.sendMessage(tabId, message, responseCb);
 }
 chrome.runtime.onConnect.addListener(function (devToolsConnection) {
   var devToolsListener = function (message, sender, sendResponse) {
-    switch (message.name) {
-      case 'get-definitions':
-        chrome.tabs.sendMessage(message.tabId, message, function (response) {
-          devToolsConnection.postMessage(response);
-        });
-        break;
-      case 'execute-script':
-        connections[message.tabId] = devToolsConnection;
-        chrome.tabs.executeScript(message.tabId, { file: message.scriptToInject });
-        break;
+    if (message.name === 'execute-script') {
+      connections[message.tabId] = devToolsConnection;
+      chrome.tabs.executeScript(message.tabId, { file: message.scriptToInject });
+    } else {
+      chrome.tabs.sendMessage(message.tabId, message, function (response) {
+        devToolsConnection.postMessage(response);
+      });
     }
   };
   // add the listener

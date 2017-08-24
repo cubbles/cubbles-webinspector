@@ -3,6 +3,8 @@
   var injectedScriptUrl = chrome.extension.getURL('js/injected_script.js');
   var injectedScript = document.querySelector('[src="' + injectedScriptUrl + '"]');
   var definitionsMsg;
+  var rootDepsMsg;
+  var baseUrlMsg;
   if (injectedScript) {
     document.body.removeChild(injectedScript);
   }
@@ -25,13 +27,31 @@
       message.source !== 'cubbles-webinspector') {
       return;
     }
-    definitionsMsg = message;
+    switch (message.name) {
+      case 'set-definitions':
+        definitionsMsg = message;
+        break;
+      case 'set-root-deps':
+        rootDepsMsg = message;
+        break;
+      case 'set-base-url':
+        baseUrlMsg = message;
+        break;
+    }
   });
 
   chrome.runtime.onMessage.addListener(
     function (message, sender, sendResponse) {
-      if (message.name === 'get-definitions') {
-        sendResponse(definitionsMsg);
+      switch (message.name) {
+        case 'get-definitions':
+          sendResponse(definitionsMsg);
+          break;
+        case 'get-root-deps':
+          sendResponse(rootDepsMsg);
+          break;
+        case 'get-base-url':
+          sendResponse(baseUrlMsg);
+          break;
       }
     });
 })();
