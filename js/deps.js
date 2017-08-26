@@ -11,7 +11,7 @@ window.cubx = {
       },
       {
         webpackageId: 'dep-tree-viewer@1.1.1-SNAPSHOT',
-        artifactId: 'cubx-deps-tree-viewer'
+        artifactId: 'cubx-dep-tree-viewer'
       }
     ]
   }

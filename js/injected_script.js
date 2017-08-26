@@ -5,7 +5,6 @@
   var connectionDefs = [];
   var defsReady;
   var rootDepsReady;
-  var baseUrlReady;
 
   if (window.cubx && window.cubx.CRC && window.cubx.CRC._root.Context &&
     window.cubx.CRC._root.Context._connectionMgr &&
@@ -14,39 +13,77 @@
     defsReady = true;
   }
   if (window.cubx && window.cubx.CRCInit && window.cubx.CRCInit.rootDependencies) {
-    postRootDeps();
+    postDepTree();
     rootDepsReady = true;
   }
-  if (window.cubx && window.cubx.CRC && window.cubx.CRC._baseUrl) {
-    postBaseUrl();
-    baseUrlReady = true;
-  }
-  if (!defsReady || !rootDepsReady || !baseUrlReady) {
+  if (!defsReady || !rootDepsReady) {
     document.addEventListener('cifReady', function () {
       if (!defsReady) {
         postDefinitions();
       }
       if (!rootDepsReady) {
-        postRootDeps();
-      }
-      if (!baseUrlReady) {
-        postBaseUrl();
+        postDepTree();
       }
     });
   }
 
+  /**
+   * Post a meesage indicating the source. Message will be received by the content_script.js
+   * @param name
+   * @param content
+   */
   function postMessage (name, content) {
     window.postMessage({ name: name, content: content, source: 'cubbles-webinspector' }, '*');
   }
 
-  function postRootDeps () {
-    postMessage('set-root-deps', window.cubx.CRCInit.rootDependencies);
+  /**
+   * Build de depTree and parse it to JSON. Then send the depTree as message
+   */
+  function postDepTree () {
+    var depMgr = window.cubx.CRC.getDependencyMgr();
+    // Create list of DepReference items from given rootDependencies
+    var deps = depMgr._createDepReferenceListFromArtifactDependencies(window.cubx.CRCInit.rootDependencies);
+
+    // Finally build rawDependency tree providing DepReference list and baseUrl
+    depMgr._buildRawDependencyTree(deps, window.cubx.CRC._baseUrl)
+      .then(function (depTree) {
+        postMessage('set-dep-tree', depTreeToJSON(depTree));
+      });
   }
 
-  function postBaseUrl () {
-    var a = document.createElement('a');
-    a.href = window.cubx.CRC._baseUrl;
-    postMessage('set-base-url', a.href);
+  /**
+   * Parse a depTree to JSON format so that it can be post as message
+   * @param {DependencyTree} depTree - Dependecy tree to be parsed
+   * @returns {{_rootNodes: Array}}
+   */
+  function depTreeToJSON (depTree) {
+    var rootNodes = [];
+    depTree._rootNodes.forEach(function (rootNode) {
+      rootNodes.push(nodeToJSON(rootNode));
+    });
+    return { _rootNodes: rootNodes };
+  }
+
+  /**
+   * Parse a node to JSON format, so that it can be post as message
+   * @param {DependencyTree.Node} node - Node to be parsed
+   * @returns {{data: object, children: Array}}
+   */
+  function nodeToJSON (node) {
+    var jsonObject = {};
+    var children = [];
+    if (node.children.length > 0) {
+      node.children.forEach(function (child) {
+        children.push(nodeToJSON(child));
+      });
+    }
+    jsonObject.data = {
+      webpackageId: node.data.webpackageId,
+      artifactId: node.data.artifactId,
+      resources: node.data.resources
+    };
+    jsonObject.children = children;
+    return jsonObject;
   }
 
   /**

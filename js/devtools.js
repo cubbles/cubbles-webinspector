@@ -21,28 +21,24 @@ chrome.devtools.panels.create(
         });
 
         extPanelWin.document.addEventListener('cifReady', function () {
-          postMessage(backgroundPageConnection, 'get-base-url');
           postMessage(backgroundPageConnection, 'get-definitions');
-          postMessage(backgroundPageConnection, 'get-root-deps');
+          postMessage(backgroundPageConnection, 'get-dep-tree');
         });
 
         backgroundPageConnection.onMessage.addListener(function (message) {
           var componentVwr = extPanelWin.document.querySelector('cubx-generic-component-viewer');
-          var depTreeVwr = extPanelWin.document.querySelector('cubx-deps-tree-viewer');
+          var depTreeVwr = extPanelWin.document.querySelector('cubx-dep-tree-viewer');
           var vwrHeight = (componentVwr.parentNode.scrollHeight > 0
               ? componentVwr.parentNode.scrollHeight
               : depTreeVwr.parentNode.scrollHeight) * 0.8 + 'px';
           switch (message.name) {
-            case 'set-base-url':
-              depTreeVwr.setBaseUrl(message.content);
-              break;
             case 'set-definitions':
               componentVwr.setViewerHeight(vwrHeight);
               componentVwr.setDefinitions(message.content);
               break;
-            case 'set-root-deps':
+            case 'set-dep-tree':
               depTreeVwr.setHeight(vwrHeight);
-              depTreeVwr.setRootDependencies(message.content);
+              depTreeVwr.setDepTree(message.content);
               depTreeVwr.setScale('auto');
               break;
           }

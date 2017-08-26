@@ -3,8 +3,7 @@
   var injectedScriptUrl = chrome.extension.getURL('js/injected_script.js');
   var injectedScript = document.querySelector('[src="' + injectedScriptUrl + '"]');
   var definitionsMsg;
-  var rootDepsMsg;
-  var baseUrlMsg;
+  var depTreeMsg;
   if (injectedScript) {
     document.body.removeChild(injectedScript);
   }
@@ -31,11 +30,8 @@
       case 'set-definitions':
         definitionsMsg = message;
         break;
-      case 'set-root-deps':
-        rootDepsMsg = message;
-        break;
-      case 'set-base-url':
-        baseUrlMsg = message;
+      case 'set-dep-tree':
+        depTreeMsg = message;
         break;
     }
   });
@@ -46,11 +42,8 @@
         case 'get-definitions':
           sendResponse(definitionsMsg);
           break;
-        case 'get-root-deps':
-          sendResponse(rootDepsMsg);
-          break;
-        case 'get-base-url':
-          sendResponse(baseUrlMsg);
+        case 'get-dep-tree':
+          sendResponse(depTreeMsg);
           break;
       }
     });
