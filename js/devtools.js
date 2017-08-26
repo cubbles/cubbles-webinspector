@@ -1,6 +1,6 @@
 /* globals chrome */
 
-function postMessage(receiver, name, content) {
+function postMessage (receiver, name, content) {
   receiver.postMessage({
     name: name,
     content: content,
@@ -28,9 +28,7 @@ chrome.devtools.panels.create(
         backgroundPageConnection.onMessage.addListener(function (message) {
           var componentVwr = extPanelWin.document.querySelector('cubx-generic-component-viewer');
           var depTreeVwr = extPanelWin.document.querySelector('cubx-dep-tree-viewer');
-          var vwrHeight = (componentVwr.parentNode.scrollHeight > 0
-              ? componentVwr.parentNode.scrollHeight
-              : depTreeVwr.parentNode.scrollHeight) * 0.8 + 'px';
+          var vwrHeight = extPanelWin.document.body.scrollHeight * 0.7 + 'px';
           switch (message.name) {
             case 'set-definitions':
               componentVwr.setViewerHeight(vwrHeight);
