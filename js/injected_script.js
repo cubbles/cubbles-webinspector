@@ -3,26 +3,20 @@
   var membersDefs = {};
   var slotsDefs = {};
   var connectionDefs = [];
-  var defsReady;
-  var rootDepsReady;
 
-  if (window.cubx && window.cubx.CRC && window.cubx.CRC._root.Context &&
-    window.cubx.CRC._root.Context._connectionMgr &&
-    window.cubx.CRC._root.Context._connectionMgr._connections) {
+  if (window.cubx && window.cubx.cif && window.cubx.cif.cif && window.cubx.cif.cif._cifReady) {
     postDefinitions();
-    defsReady = true;
-  }
-  if (window.cubx && window.cubx.CRCInit && window.cubx.CRCInit.rootDependencies) {
     postDepTree();
-    rootDepsReady = true;
-  }
-  if (!defsReady || !rootDepsReady) {
+    postMessage('cif-ready');
+  } else {
     document.addEventListener('cifReady', postInitialMessages);
   }
 
-  document.addEventListener('cifDomUpdateReady', postDomUpdateMessage);
+  document.addEventListener('cifDomUpdateReady', handleDomUpdateChange);
 
-  function postDomUpdateMessage () {
+  function handleDomUpdateChange () {
+    postDefinitions();
+    postDepTree();
     postMessage('cif-dom-update');
   }
 
@@ -30,17 +24,14 @@
    * Post initial messages and removes 'cifReady' event listener
    */
   function postInitialMessages () {
-    if (!defsReady) {
-      postDefinitions();
-    }
-    if (!rootDepsReady) {
-      postDepTree();
-    }
+    postMessage('cif-ready');
+    postDefinitions();
+    postDepTree();
     document.removeEventListener('cifReady', postInitialMessages);
   }
 
   /**
-   * Post a meesage indicating the source. Message will be received by the content_script.js
+   * Post a message indicating the source. Message will be received by the content_script.js
    * @param name
    * @param content
    */

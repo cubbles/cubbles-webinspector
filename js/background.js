@@ -1,10 +1,5 @@
 /* globals chrome */
 var connections = {};
-
-// TODO: check how to use it
-function sendMessageToTab (tabId, message, responseCb) {
-  chrome.tabs.sendMessage(tabId, message, responseCb);
-}
 chrome.runtime.onConnect.addListener(function (devToolsConnection) {
   var devToolsListener = function (message, sender, sendResponse) {
     if (message.name === 'execute-script') {
@@ -21,6 +16,12 @@ chrome.runtime.onConnect.addListener(function (devToolsConnection) {
 
   devToolsConnection.onDisconnect.addListener(function () {
     devToolsConnection.onMessage.removeListener(devToolsListener);
+  });
+
+  chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+    if (changeInfo.status === 'complete') {
+      devToolsConnection.postMessage({name: 'tab-updated'});
+    }
   });
 });
 

@@ -33,6 +33,9 @@
       case 'set-dep-tree':
         depTreeMsg = message;
         break;
+      case 'cif-ready':
+        chrome.runtime.sendMessage(message);
+        break;
       case 'cif-dom-update':
         chrome.runtime.sendMessage(message);
         break;

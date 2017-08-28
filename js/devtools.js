@@ -26,7 +26,7 @@ chrome.devtools.panels.create(
         });
 
         extPanelWin.document.addEventListener('cifReady', function () {
-          requestInformation(backgroundPageConnection);
+          postExecuteContentScript();
         });
 
         backgroundPageConnection.onMessage.addListener(function (message) {
@@ -44,19 +44,27 @@ chrome.devtools.panels.create(
               depTreeVwr.setDepTree(message.content);
               extPanelWin.handleInitialScale('depsTreeViewerT', depTreeVwr);
               break;
+            case 'cif-ready':
+              requestInformation(backgroundPageConnection);
+              break;
             case 'cif-dom-update':
               requestInformation(backgroundPageConnection);
+              break;
+            case 'tab-updated':
+              postExecuteContentScript();
               break;
           }
         });
 
-        // Relay the tab ID to the background page
-        backgroundPageConnection.postMessage({
-          name: 'execute-script',
-          tabId: chrome.devtools.inspectedWindow.tabId,
-          scriptToInject: 'js/content_script.js'
-        });
-        initialised = true;
+        var postExecuteContentScript = function () {
+          // Relay the tab ID to the background page
+          backgroundPageConnection.postMessage({
+            name: 'execute-script',
+            tabId: chrome.devtools.inspectedWindow.tabId,
+            scriptToInject: 'js/content_script.js'
+          });
+          initialised = true;
+        };
       }
     });
   }
