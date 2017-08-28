@@ -33,11 +33,12 @@ chrome.devtools.panels.create(
             case 'set-definitions':
               componentVwr.setViewerHeight(vwrHeight);
               componentVwr.setDefinitions(message.content);
+              extPanelWin.handleInitialScale('componentViewerT', componentVwr);
               break;
             case 'set-dep-tree':
               depTreeVwr.setHeight(vwrHeight);
               depTreeVwr.setDepTree(message.content);
-              depTreeVwr.setScale('auto');
+              extPanelWin.handleInitialScale('depsTreeViewerT', depTreeVwr);
               break;
           }
         });
