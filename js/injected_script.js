@@ -17,14 +17,26 @@
     rootDepsReady = true;
   }
   if (!defsReady || !rootDepsReady) {
-    document.addEventListener('cifReady', function () {
-      if (!defsReady) {
-        postDefinitions();
-      }
-      if (!rootDepsReady) {
-        postDepTree();
-      }
-    });
+    document.addEventListener('cifReady', postInitialMessages);
+  }
+
+  document.addEventListener('cifDomUpdateReady', postDomUpdateMessage);
+
+  function postDomUpdateMessage () {
+    postMessage('cif-dom-update');
+  }
+
+  /**
+   * Post initial messages and removes 'cifReady' event listener
+   */
+  function postInitialMessages () {
+    if (!defsReady) {
+      postDefinitions();
+    }
+    if (!rootDepsReady) {
+      postDepTree();
+    }
+    document.removeEventListener('cifReady', postInitialMessages);
   }
 
   /**

@@ -8,6 +8,11 @@ function postMessage (receiver, name, content) {
   });
 }
 
+function requestInformation (backgroundConnection) {
+  postMessage(backgroundConnection, 'get-definitions');
+  postMessage(backgroundConnection, 'get-dep-tree');
+}
+
 chrome.devtools.panels.create(
   'Cubbles',
   'cubbles.png',
@@ -21,8 +26,7 @@ chrome.devtools.panels.create(
         });
 
         extPanelWin.document.addEventListener('cifReady', function () {
-          postMessage(backgroundPageConnection, 'get-definitions');
-          postMessage(backgroundPageConnection, 'get-dep-tree');
+          requestInformation(backgroundPageConnection);
         });
 
         backgroundPageConnection.onMessage.addListener(function (message) {
@@ -39,6 +43,9 @@ chrome.devtools.panels.create(
               depTreeVwr.setHeight(vwrHeight);
               depTreeVwr.setDepTree(message.content);
               extPanelWin.handleInitialScale('depsTreeViewerT', depTreeVwr);
+              break;
+            case 'cif-dom-update':
+              requestInformation(backgroundPageConnection);
               break;
           }
         });
