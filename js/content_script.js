@@ -1,17 +1,16 @@
 /* globals chrome */
 (function () {
-  var injectedScriptUrl = chrome.extension.getURL('js/injected_script.js');
-  var injectedScript = document.querySelector('[src="' + injectedScriptUrl + '"]');
+  var injectedScriptId = 'chrome-webinspector-script';
+  var injectedScript = document.querySelector('#' + injectedScriptId);
   var definitionsMsg;
   var depTreeMsg;
-  if (injectedScript) {
-    document.body.removeChild(injectedScript);
+  if (!injectedScript) {
+    var script = document.createElement('script');
+    script.type = 'text/javascript';
+    script.src = chrome.extension.getURL('js/injected_script.js');
+    script.setAttribute('id', injectedScriptId);
+    document.body.appendChild(script);
   }
-
-  var script = document.createElement('script');
-  script.type = 'text/javascript';
-  script.src = injectedScriptUrl;
-  document.body.appendChild(script);
 
   window.addEventListener('message', function (event) {
     // Only accept messages from the same frame
