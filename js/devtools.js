@@ -51,9 +51,6 @@
               case 'cif-ready':
                 requestInformation(backgroundPageConnection);
                 break;
-              case 'cif-dom-update':
-                // requestInformation(backgroundPageConnection);
-                break;
               case 'tab-updated':
                 postExecuteContentScript();
                 break;

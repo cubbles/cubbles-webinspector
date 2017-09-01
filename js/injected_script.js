@@ -25,14 +25,6 @@
     document.addEventListener('cifReady', postInitialMessages);
   }
 
-  document.addEventListener('cifDomUpdateReady', handleDomUpdateChange);
-
-  function handleDomUpdateChange () {
-    postDefinitions();
-    postDepTree();
-    postMessage('cif-dom-update');
-  }
-
   /**
    * Post initial messages and removes 'cifReady' event listener
    */
