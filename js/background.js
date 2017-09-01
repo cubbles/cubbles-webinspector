@@ -29,6 +29,7 @@ chrome.runtime.onConnect.addListener(function (devToolsConnection) {
 // current tab
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   // Messages from content scripts should have sender.tab set
+  console.log('bs, msg from content-script: ', request);
   if (sender.tab) {
     var tabId = sender.tab.id;
     if (tabId in connections) {

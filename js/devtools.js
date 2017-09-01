@@ -24,9 +24,13 @@ chrome.devtools.panels.create(
         var backgroundPageConnection = chrome.runtime.connect({
           name: 'devtools-connection'
         });
-
         extPanelWin.document.addEventListener('cifReady', function () {
           postExecuteContentScript();
+          var reloadB = extPanelWin.document.querySelector('#reloadB');
+          reloadB.removeAttribute('disabled');
+          reloadB.addEventListener('click', function () {
+            requestInformation(backgroundPageConnection);
+          });
         });
 
         backgroundPageConnection.onMessage.addListener(function (message) {
@@ -35,6 +39,7 @@ chrome.devtools.panels.create(
           var vwrHeight = extPanelWin.document.body.scrollHeight * 0.7 + 'px';
           switch (message.name) {
             case 'set-definitions':
+              console.log('set-defs');
               componentVwr.setViewerHeight(vwrHeight);
               componentVwr.setDefinitions(message.content);
               extPanelWin.handleInitialScale('componentViewerT', componentVwr);
@@ -48,10 +53,13 @@ chrome.devtools.panels.create(
               requestInformation(backgroundPageConnection);
               break;
             case 'cif-dom-update':
-              requestInformation(backgroundPageConnection);
+              // requestInformation(backgroundPageConnection);
               break;
             case 'tab-updated':
               postExecuteContentScript();
+              break;
+            case 'devtools-close':
+              postMessage(backgroundPageConnection, 'devtools-close');
               break;
           }
         });

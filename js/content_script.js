@@ -2,8 +2,6 @@
 (function () {
   var injectedScriptId = 'chrome-webinspector-script';
   var injectedScript = document.querySelector('#' + injectedScriptId);
-  var definitionsMsg;
-  var depTreeMsg;
   if (!injectedScript) {
     var script = document.createElement('script');
     script.type = 'text/javascript';
@@ -25,31 +23,20 @@
       message.source !== 'cubbles-webinspector') {
       return;
     }
-    switch (message.name) {
-      case 'set-definitions':
-        definitionsMsg = message;
-        break;
-      case 'set-dep-tree':
-        depTreeMsg = message;
-        break;
-      case 'cif-ready':
-        chrome.runtime.sendMessage(message);
-        break;
-      case 'cif-dom-update':
-        chrome.runtime.sendMessage(message);
-        break;
-    }
+    chrome.runtime.sendMessage(message);
   });
+
+  /**
+   * Dispatch 'componentAppend' event so that the CRC starts working
+   */
+  function dispatchGetInfoEvent (message) {
+    var event = document.createEvent('CustomEvent');
+    event.initCustomEvent('getInfo', true, true, message);
+    document.dispatchEvent(event);
+  }
 
   chrome.runtime.onMessage.addListener(
     function (message, sender, sendResponse) {
-      switch (message.name) {
-        case 'get-definitions':
-          sendResponse(definitionsMsg);
-          break;
-        case 'get-dep-tree':
-          sendResponse(depTreeMsg);
-          break;
-      }
+      dispatchGetInfoEvent(message);
     });
 })();
