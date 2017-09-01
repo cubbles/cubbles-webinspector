@@ -7,7 +7,6 @@
   var definitions;
 
   document.addEventListener('getInfo', function (e) {
-    console.log('getInfo', e.detail);
     switch (e.detail.name) {
       case 'get-definitions':
         postDefinitions();
@@ -29,7 +28,6 @@
   document.addEventListener('cifDomUpdateReady', handleDomUpdateChange);
 
   function handleDomUpdateChange () {
-    console.log('cifDomUpdateReady');
     postDefinitions();
     postDepTree();
     postMessage('cif-dom-update');
