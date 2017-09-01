@@ -3,6 +3,20 @@
   var membersDefs = {};
   var slotsDefs = {};
   var connectionDefs = [];
+  var dependencyTree;
+  var definitions;
+
+  document.addEventListener('getInfo', function (e) {
+    console.log('getInfo', e.detail);
+    switch (e.detail.name) {
+      case 'get-definitions':
+        postDefinitions();
+        break;
+      case 'get-dep-tree':
+        postDepTree();
+        break;
+    }
+  });
 
   if (window.cubx && window.cubx.cif && window.cubx.cif.cif && window.cubx.cif.cif._cifReady) {
     postDefinitions();
@@ -15,6 +29,7 @@
   document.addEventListener('cifDomUpdateReady', handleDomUpdateChange);
 
   function handleDomUpdateChange () {
+    console.log('cifDomUpdateReady');
     postDefinitions();
     postDepTree();
     postMessage('cif-dom-update');
@@ -50,7 +65,10 @@
     // Finally build rawDependency tree providing DepReference list and baseUrl
     depMgr._buildRawDependencyTree(deps, window.cubx.CRC._baseUrl)
       .then(function (depTree) {
-        postMessage('set-dep-tree', depTreeToJSON(depTree));
+        if (depTree !== dependencyTree) {
+          postMessage('set-dep-tree', depTreeToJSON(depTree));
+          dependencyTree = depTree;
+        }
       });
   }
 
@@ -97,7 +115,11 @@
     membersDefs = {};
     slotsDefs = {};
     connectionDefs = [];
-    postMessage('set-definitions', _getDefsFromConnections(window.cubx.CRC._root.Context._connectionMgr._connections));
+    var defs = _getDefsFromConnections(window.cubx.CRC._root.Context._connectionMgr._connections);
+    if (definitions !== defs) {
+      postMessage('set-definitions', defs);
+      definitions = defs;
+    }
   }
 
   /**
