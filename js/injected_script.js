@@ -52,8 +52,9 @@
 
   /**
    * Build de depTree and parse it to JSON. Then send the depTree as message
+   * @param {boolean} force - Indicates whether the message should forced to be sent
    */
-  function postDepTree () {
+  function postDepTree (force) {
     var depMgr = window.cubx.CRC.getDependencyMgr();
     // Create list of DepReference items from given rootDependencies
     var deps = depMgr._createDepReferenceListFromArtifactDependencies(window.cubx.CRCInit.rootDependencies);
@@ -61,7 +62,7 @@
     // Finally build rawDependency tree providing DepReference list and baseUrl
     depMgr._buildRawDependencyTree(deps, window.cubx.CRC._baseUrl)
       .then(function (depTree) {
-        if (depTree !== dependencyTree) {
+        if (force || depTree !== dependencyTree) {
           postMessage('set-dep-tree', depTreeToJSON(depTree));
           dependencyTree = depTree;
         }
@@ -70,7 +71,7 @@
 
   /**
    * Parse a depTree to JSON format so that it can be post as message
-   * @param {DependencyTree} depTree - Dependecy tree to be parsed
+   * @param {DependencyTree} depTree - Dependency tree to be parsed
    * @returns {{_rootNodes: Array}}
    */
   function depTreeToJSON (depTree) {
@@ -105,6 +106,7 @@
 
   /**
    * Post the definitions of the current page
+   * * @param {boolean} force - Indicates whether the message should forced to be sent
    */
   function postDefinitions (force) {
     // TODO: Use new dynamicConnectionEvent when available
@@ -116,13 +118,16 @@
     connectionIds = [];
     var defs = _getDefsFromConnections(window.cubx.CRC._root.Context._connectionMgr._connections);
     if (force || !sameConnectionsIds(oldConnectionIds, connectionIds)) {
-      console.log('connections id are different');
       postMessage('set-definitions', defs);
-    } else {
-      console.log('connections id are the same, defs not sent');
     }
   }
 
+  /**
+   * Indicates whether two arrays of connections Id contains the same connections ids
+   * @param {Array} connIds1 - Array to be compared
+   * @param {Array} connIds2 - Array to be compared
+   * @returns {boolean}
+   */
   function sameConnectionsIds (connIds1, connIds2) {
     var length1 = connIds1.length;
     if (length1 !== connIds2.length) {

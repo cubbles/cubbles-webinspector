@@ -30,7 +30,7 @@
               requestInformation();
             });
             extPanelWin.addOnShownListener('componentViewerT', componentVwr, requestInformation);
-            extPanelWin.addOnShownListener('depsTreeViewerT', depTreeVwr, requestInformation);
+            extPanelWin.addOnShownListener('depsTreeViewerT', depTreeVwr, requestInformation, true);
           });
 
           backgroundPageConnection.onMessage.addListener(function (message) {
@@ -70,10 +70,8 @@
             var activeTab = extPanelWin.document.querySelector('ul.nav-tabs li.active a');
             if (activeTab.id === CONNECTION_VWR_TAB_ID) {
               postMessage(backgroundPageConnection, 'get-definitions');
-              console.log('getting defs');
             } else {
               postMessage(backgroundPageConnection, 'get-dep-tree');
-              console.log('getting dep tree')
             }
           };
         }
