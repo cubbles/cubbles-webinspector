@@ -3,8 +3,8 @@
   var membersDefs = {};
   var slotsDefs = {};
   var connectionDefs = [];
+  var connectionIds = [];
   var dependencyTree;
-  var definitions;
 
   document.addEventListener('getInfo', function (e) {
     switch (e.detail.name) {
@@ -18,11 +18,17 @@
   });
 
   if (window.cubx && window.cubx.cif && window.cubx.cif.cif && window.cubx.cif.cif._cifReady) {
-    postDefinitions();
-    postDepTree();
-    postMessage('cif-ready');
+    postInitialMessages();
   } else {
-    document.addEventListener('cifReady', postInitialMessages);
+    document.addEventListener('cifReady', handleCifReady);
+  }
+
+  /**
+   * Post initial messages and removes 'cifReady' event listener
+   */
+  function handleCifReady () {
+    postInitialMessages();
+    document.removeEventListener('cifReady', handleCifReady);
   }
 
   /**
@@ -30,8 +36,8 @@
    */
   function postInitialMessages () {
     postMessage('cif-ready');
-    postDefinitions();
-    postDepTree();
+    postDefinitions(true);
+    postDepTree(true);
     document.removeEventListener('cifReady', postInitialMessages);
   }
 
@@ -100,16 +106,34 @@
   /**
    * Post the definitions of the current page
    */
-  function postDefinitions () {
+  function postDefinitions (force) {
+    // TODO: Use new dynamicConnectionEvent when available
+    var oldConnectionIds = connectionIds;
     componentsDefs = {};
     membersDefs = {};
     slotsDefs = {};
     connectionDefs = [];
+    connectionIds = [];
     var defs = _getDefsFromConnections(window.cubx.CRC._root.Context._connectionMgr._connections);
-    if (definitions !== defs) {
+    if (force || !sameConnectionsIds(oldConnectionIds, connectionIds)) {
+      console.log('connections id are different');
       postMessage('set-definitions', defs);
-      definitions = defs;
+    } else {
+      console.log('connections id are the same, defs not sent');
     }
+  }
+
+  function sameConnectionsIds (connIds1, connIds2) {
+    var length1 = connIds1.length;
+    if (length1 !== connIds2.length) {
+      return false;
+    }
+    for (var i = 0; i < length1; i++) {
+      if (connIds2.indexOf(connIds1[i]) === -1) {
+        return false;
+      }
+    }
+    return true;
   }
 
   /**
@@ -238,7 +262,9 @@
     connections.forEach(function (connection) {
       _addComponentDefFromContextConnection(connection.source, true);
       _addComponentDefFromContextConnection(connection.destination);
-      connectionDefs.push(_getConnectionDefFromContextConnection(connection));
+      var connectionDef = _getConnectionDefFromContextConnection(connection);
+      connectionDefs.push(connectionDef);
+      connectionIds.push(connectionDef.connectionId);
     });
 
     _completeComponentSlotDefs();

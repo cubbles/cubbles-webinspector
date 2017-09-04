@@ -1,16 +1,12 @@
 /* globals chrome */
 (function () {
+  var CONNECTION_VWR_TAB_ID = 'componentViewerT';
   function postMessage (receiver, name, content) {
     receiver.postMessage({
       name: name,
       content: content,
       tabId: chrome.devtools.inspectedWindow.tabId
     });
-  }
-
-  function requestInformation (backgroundConnection) {
-    postMessage(backgroundConnection, 'get-definitions');
-    postMessage(backgroundConnection, 'get-dep-tree');
   }
 
   chrome.devtools.panels.create(
@@ -21,6 +17,8 @@
       var initialised = false;
       panel.onShown.addListener(function (extPanelWin) {
         if (!initialised) {
+          var componentVwr = extPanelWin.document.querySelector('cubx-generic-component-viewer');
+          var depTreeVwr = extPanelWin.document.querySelector('cubx-dep-tree-viewer');
           var backgroundPageConnection = chrome.runtime.connect({
             name: 'devtools-connection'
           });
@@ -29,27 +27,25 @@
             var reloadB = extPanelWin.document.querySelector('#reloadB');
             reloadB.removeAttribute('disabled');
             reloadB.addEventListener('click', function () {
-              requestInformation(backgroundPageConnection);
+              requestInformation();
             });
+            extPanelWin.addOnShownListener('componentViewerT', componentVwr, requestInformation);
+            extPanelWin.addOnShownListener('depsTreeViewerT', depTreeVwr, requestInformation);
           });
 
           backgroundPageConnection.onMessage.addListener(function (message) {
-            var componentVwr = extPanelWin.document.querySelector('cubx-generic-component-viewer');
-            var depTreeVwr = extPanelWin.document.querySelector('cubx-dep-tree-viewer');
             var vwrHeight = extPanelWin.document.body.scrollHeight * 0.7 + 'px';
             switch (message.name) {
               case 'set-definitions':
                 componentVwr.setViewerHeight(vwrHeight);
                 componentVwr.setDefinitions(message.content);
-                extPanelWin.handleInitialScale('componentViewerT', componentVwr);
                 break;
               case 'set-dep-tree':
                 depTreeVwr.setHeight(vwrHeight);
                 depTreeVwr.setDepTree(message.content);
-                extPanelWin.handleInitialScale('depsTreeViewerT', depTreeVwr);
                 break;
               case 'cif-ready':
-                requestInformation(backgroundPageConnection);
+                requestInformation();
                 break;
               case 'tab-updated':
                 postExecuteContentScript();
@@ -68,6 +64,17 @@
               scriptToInject: 'js/content_script.js'
             });
             initialised = true;
+          };
+
+          var requestInformation = function () {
+            var activeTab = extPanelWin.document.querySelector('ul.nav-tabs li.active a');
+            if (activeTab.id === CONNECTION_VWR_TAB_ID) {
+              postMessage(backgroundPageConnection, 'get-definitions');
+              console.log('getting defs');
+            } else {
+              postMessage(backgroundPageConnection, 'get-dep-tree');
+              console.log('getting dep tree')
+            }
           };
         }
       });
