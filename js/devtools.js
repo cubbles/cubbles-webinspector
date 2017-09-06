@@ -34,14 +34,11 @@
           });
 
           backgroundPageConnection.onMessage.addListener(function (message) {
-            var vwrHeight = extPanelWin.document.body.scrollHeight * 0.7 + 'px';
             switch (message.name) {
               case 'set-definitions':
-                componentVwr.setViewerHeight(vwrHeight);
                 componentVwr.setDefinitions(message.content);
                 break;
               case 'set-dep-tree':
-                depTreeVwr.setHeight(vwrHeight);
                 depTreeVwr.setDepTree(message.content);
                 break;
               case 'cif-ready':

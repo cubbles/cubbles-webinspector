@@ -12,7 +12,6 @@
         });
       }
     };
-    // add the listener
     devToolsConnection.onMessage.addListener(devToolsListener);
 
     devToolsConnection.onDisconnect.addListener(function () {

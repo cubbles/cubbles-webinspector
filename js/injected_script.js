@@ -70,6 +70,24 @@
   }
 
   /**
+   * Post the definitions of the current page
+   * * @param {boolean} force - Indicates whether the message should forced to be sent
+   */
+  function postDefinitions (force) {
+    // TODO: Use new dynamicConnectionEvent when available
+    var oldConnectionIds = connectionIds;
+    componentsDefs = {};
+    membersDefs = {};
+    slotsDefs = {};
+    connectionDefs = [];
+    connectionIds = [];
+    var defs = _getDefsFromConnections(window.cubx.CRC._root.Context._connectionMgr._connections);
+    if (force || !_sameConnectionsIds(oldConnectionIds, connectionIds)) {
+      postMessage('set-definitions', defs);
+    }
+  }
+
+  /**
    * Parse a depTree to JSON format so that it can be post as message
    * @param {DependencyTree} depTree - Dependency tree to be parsed
    * @returns {{_rootNodes: Array}}
@@ -105,30 +123,12 @@
   }
 
   /**
-   * Post the definitions of the current page
-   * * @param {boolean} force - Indicates whether the message should forced to be sent
-   */
-  function postDefinitions (force) {
-    // TODO: Use new dynamicConnectionEvent when available
-    var oldConnectionIds = connectionIds;
-    componentsDefs = {};
-    membersDefs = {};
-    slotsDefs = {};
-    connectionDefs = [];
-    connectionIds = [];
-    var defs = _getDefsFromConnections(window.cubx.CRC._root.Context._connectionMgr._connections);
-    if (force || !sameConnectionsIds(oldConnectionIds, connectionIds)) {
-      postMessage('set-definitions', defs);
-    }
-  }
-
-  /**
    * Indicates whether two arrays of connections Id contains the same connections ids
    * @param {Array} connIds1 - Array to be compared
    * @param {Array} connIds2 - Array to be compared
    * @returns {boolean}
    */
-  function sameConnectionsIds (connIds1, connIds2) {
+  function _sameConnectionsIds (connIds1, connIds2) {
     var length1 = connIds1.length;
     if (length1 !== connIds2.length) {
       return false;

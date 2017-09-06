@@ -38,5 +38,6 @@
   chrome.runtime.onMessage.addListener(
     function (message, sender, sendResponse) {
       dispatchGetInfoEvent(message);
+      sendResponse({name: 'processing'});
     });
 })();
