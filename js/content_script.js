@@ -1,5 +1,10 @@
 /* globals chrome */
 (function () {
+  window.setSelectedElement = function (e) {
+    if (e.hasAttribute('runtime-id')) {
+      dispatchGetInfoEvent({name: 'get-slots-info', content: e.getAttribute('runtime-id')});
+    }
+  };
   var injectedScriptId = 'chrome-webinspector-script';
   var injectedScript = document.querySelector('#' + injectedScriptId);
   if (!injectedScript) {

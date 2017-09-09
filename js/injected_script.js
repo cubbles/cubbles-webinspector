@@ -14,6 +14,9 @@
       case 'get-dep-tree':
         postDepTree();
         break;
+      case 'get-slots-info':
+        postMessage('set-slots-info', getSlotsInfo(document.querySelector('[runtime-id="' + e.detail.content + '"]')));
+        break;
     }
   });
 
@@ -21,6 +24,33 @@
     postInitialMessages();
   } else {
     document.addEventListener('cifReady', handleCifReady);
+  }
+
+  /**
+   * Extract the slots info of a Cubbles, to be presented in the cubbles-webinspector side panel
+   * @param cubbles
+   * @returns {{inputSlots: {}, outputSlots: {}}}
+   */
+  function getSlotsInfo (cubbles) {
+    var slotsInfo = { inputSlots: {}, outputSlots: {} };
+    cubbles.slots().forEach(function (slot) {
+      addSlot(slot, 'input', slotsInfo.inputSlots);
+      addSlot(slot, 'output', slotsInfo.outputSlots);
+    });
+
+    function addSlot (slot, direction) {
+      if (slot.direction.indexOf(direction) !== -1) {
+        slotsInfo[direction + 'Slots'][slot.slotId] = extractSlotInfo(slot, cubbles);
+      }
+    }
+
+    function extractSlotInfo (slot, cubbles) {
+      var slotInfo = {};
+      slotInfo.type = slot.type;
+      slotInfo.value = cubbles.model[slot.slotId];
+      return slotInfo;
+    }
+    return slotsInfo;
   }
 
   /**
