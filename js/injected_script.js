@@ -9,10 +9,10 @@
   document.addEventListener('getInfo', function (e) {
     switch (e.detail.name) {
       case 'get-definitions':
-        postDefinitions();
+        postDefinitions(e.detail.content);
         break;
       case 'get-dep-tree':
-        postDepTree();
+        postDepTree(e.detail.content);
         break;
       case 'get-slots-info':
         postMessage('set-slots-info', getSlotsInfo(document.querySelector('[runtime-id="' + e.detail.content + '"]')));

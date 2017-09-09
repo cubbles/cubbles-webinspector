@@ -2,7 +2,6 @@
 (function () {
   var connections = {};
   chrome.runtime.onConnect.addListener(function (devToolsConnection) {
-    console.log('got connection');
     var devToolsListener = function (message, sender, sendResponse) {
       if (message.name === 'execute-script') {
         connections[message.tabId] = devToolsConnection;

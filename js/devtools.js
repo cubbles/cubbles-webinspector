@@ -5,38 +5,6 @@
   var cubblesSidepanel;
   var componentVwr;
   var depTreeVwr;
-
-  function postMessage (name, content) {
-    backgroundPageConnection.postMessage({
-      name: name,
-      content: content,
-      tabId: chrome.devtools.inspectedWindow.tabId
-    });
-  }
-  var backgroundPageConnection = chrome.runtime.connect({
-    name: 'devtools-connection'
-  });
-
-  backgroundPageConnection.onMessage.addListener(function (message) {
-    switch (message.name) {
-      case 'set-definitions':
-        componentVwr.setDefinitions(message.content);
-        break;
-      case 'set-dep-tree':
-        depTreeVwr.setDepTree(message.content);
-        break;
-      case 'cif-ready':
-        requestInformation();
-        break;
-      case 'tab-updated':
-        postExecuteContentScript();
-        break;
-      case 'set-slots-info':
-        cubblesSidepanel.setObject(message.content);
-        break;
-    }
-  });
-
   var postExecuteContentScript = function () {
     // Relay the tab ID to the background page
     backgroundPageConnection.postMessage({
@@ -45,13 +13,12 @@
       scriptToInject: 'js/content_script.js'
     });
   };
-
-  var requestInformation = function () {
+  var requestInformation = function (force) {
     var activeTab = cubblesPanel.document.querySelector('ul.nav-tabs li.active a');
     if (activeTab.id === CONNECTION_VWR_TAB_ID) {
-      postMessage('get-definitions');
+      postMessage('get-definitions', force);
     } else {
-      postMessage('get-dep-tree');
+      postMessage('get-dep-tree', force);
     }
   };
 
@@ -67,7 +34,6 @@
           componentVwr = extPanelWin.document.querySelector('cubx-generic-component-viewer');
           depTreeVwr = extPanelWin.document.querySelector('cubx-dep-tree-viewer');
           extPanelWin.document.addEventListener('cifReady', function () {
-            postExecuteContentScript();
             var reloadB = extPanelWin.document.querySelector('#reloadB');
             reloadB.removeAttribute('disabled');
             reloadB.addEventListener('click', function () {
@@ -75,6 +41,7 @@
             });
             extPanelWin.addOnShownListener('componentViewerT', componentVwr, requestInformation);
             extPanelWin.addOnShownListener('depsTreeViewerT', depTreeVwr, requestInformation, true);
+            requestInformation(true);
           });
         }
         initialised = true;
@@ -85,8 +52,39 @@
   chrome.devtools.panels.elements.createSidebarPane('Cubbles',
     function (sidebar) {
       cubblesSidepanel = sidebar;
-      postExecuteContentScript();
       chrome.devtools.inspectedWindow.eval('window.setSelectedElement($0)',
         { useContentScriptContext: true });
     });
+
+  function postMessage (name, content) {
+    backgroundPageConnection.postMessage({
+      name: name,
+      content: content,
+      tabId: chrome.devtools.inspectedWindow.tabId
+    });
+  }
+
+  var backgroundPageConnection = chrome.runtime.connect({
+    name: 'devtools-connection'
+  });
+  backgroundPageConnection.onMessage.addListener(function (message) {
+    switch (message.name) {
+      case 'set-definitions':
+        componentVwr.setDefinitions(message.content);
+        break;
+      case 'set-dep-tree':
+        depTreeVwr.setDepTree(message.content);
+        break;
+      case 'cif-ready':
+        requestInformation(true);
+        break;
+      case 'tab-updated':
+        postExecuteContentScript();
+        break;
+      case 'set-slots-info':
+        cubblesSidepanel.setObject(message.content);
+        break;
+    }
+  });
+  postExecuteContentScript();
 })();
