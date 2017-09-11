@@ -52,8 +52,13 @@
   chrome.devtools.panels.elements.createSidebarPane('Cubbles',
     function (sidebar) {
       cubblesSidepanel = sidebar;
-      chrome.devtools.inspectedWindow.eval('window.setSelectedElement($0)',
-        { useContentScriptContext: true });
+
+      function updateSlotsInfo () {
+        chrome.devtools.inspectedWindow.eval('window.setSelectedElement($0)',
+          { useContentScriptContext: true });
+      }
+
+      chrome.devtools.panels.elements.onSelectionChanged.addListener(updateSlotsInfo);
     });
 
   function postMessage (name, content) {
