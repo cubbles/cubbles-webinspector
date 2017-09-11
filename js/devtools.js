@@ -52,6 +52,12 @@
   chrome.devtools.panels.elements.createSidebarPane('Cubbles',
     function (sidebar) {
       cubblesSidepanel = sidebar;
+      sidebar.setPage('sidebar.html');
+
+      sidebar.onShown.addListener(function (window) {
+        cubblesSidepanel.window = window;
+        updateSlotsInfo();
+      });
 
       function updateSlotsInfo () {
         chrome.devtools.inspectedWindow.eval('window.setSelectedElement($0)',
@@ -87,7 +93,9 @@
         postExecuteContentScript();
         break;
       case 'set-slots-info':
-        cubblesSidepanel.setObject(message.content);
+        if (cubblesSidepanel.window) {
+          cubblesSidepanel.window.setInputSlotsInfo(message.content);
+        }
         break;
     }
   });

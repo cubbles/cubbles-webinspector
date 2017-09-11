@@ -40,7 +40,7 @@
    * @returns {{inputSlots: {}, outputSlots: {}}}
    */
   function getSlotsInfo (cubbles) {
-    var slotsInfo = { inputSlots: {}, outputSlots: {} };
+    var slotsInfo = { inputSlots: [], outputSlots: [] };
     cubbles.slots().forEach(function (slot) {
       addSlot(slot, 'input', slotsInfo.inputSlots);
       addSlot(slot, 'output', slotsInfo.outputSlots);
@@ -48,12 +48,13 @@
 
     function addSlot (slot, direction) {
       if (slot.direction.indexOf(direction) !== -1) {
-        slotsInfo[direction + 'Slots'][slot.slotId] = extractSlotInfo(slot, cubbles);
+        slotsInfo[direction + 'Slots'].push(extractSlotInfo(slot, cubbles));
       }
     }
 
     function extractSlotInfo (slot, cubbles) {
       var slotInfo = {};
+      slotInfo.slotId = slot.slotId;
       slotInfo.type = slot.type;
       slotInfo.value = cubbles.model[slot.slotId];
       return slotInfo;
