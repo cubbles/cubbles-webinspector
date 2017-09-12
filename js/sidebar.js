@@ -1,11 +1,13 @@
 /* globals hljs */
 (function () {
+  var runtimeId;
   /**
    * Method to update slots information of a cubbles within the sidebar panel
    * @param slotsInfo - {inputSlots: ..., outputSlots: ...}
    */
   window.setInputSlotsInfo = function (slotsInfo) {
     if (slotsInfo.inputSlots && slotsInfo.outputSlots) {
+      runtimeId = slotsInfo.runtimeId;
       updateSlotsInfoInTables(slotsInfo.inputSlots, document.querySelector('#inputSlotsTable'));
       updateSlotsInfoInTables(slotsInfo.outputSlots, document.querySelector('#outputSlotsTable'));
       toggleCubblesMsg(false);
@@ -43,6 +45,29 @@
       codeElement.className = 'JSON';
       value.appendChild(codeElement);
       hljs.highlightBlock(value);
+      var setValue = row.insertCell(2);
+      var slotVTF = document.createElement('input');
+      slotVTF.setAttribute('id', slotInfo.slotId + 'TF');
+      var slotVBtn = document.createElement('button');
+      slotVBtn.setAttribute('data-slot-id', slotInfo.slotId);
+      slotVBtn.innerHTML = 'Set';
+      slotVBtn.addEventListener('click', postSetSlotMsg);
+      setValue.appendChild(slotVTF);
+      setValue.appendChild(slotVBtn);
+    }
+
+    function postSetSlotMsg (e) {
+      var slotId = e.target.getAttribute('data-slot-id');
+      if (slotId) {
+        window.postMessageToBackgroundScript(
+          'set-slot-value',
+          {
+            runtimeId: runtimeId,
+            slotId: slotId,
+            slotValue: document.querySelector('#' + slotId + 'TF').value
+          }
+        );
+      }
     }
   }
 

@@ -17,6 +17,13 @@
       case 'get-slots-info':
         handleSlotsInfoRequest(e.detail.content);
         break;
+      case 'set-slot-value':
+        setSlotValue(
+          document.querySelector('[runtime-id="' + e.detail.content.runtimeId + '"]'),
+          e.detail.content.slotId,
+          e.detail.content.slotValue
+        );
+        break;
     }
   });
 
@@ -34,13 +41,20 @@
     postMessage('set-slots-info', message);
   }
 
+  function setSlotValue (cubble, slotId, slotValue) {
+    var setMethodName = 'set' + slotId.charAt(0).toUpperCase() + slotId.slice(1);
+    if (cubble && cubble[setMethodName]) {
+      cubble[setMethodName](slotValue);
+    }
+  }
+
   /**
    * Extract the slots info of a Cubbles, to be presented in the cubbles-webinspector side panel
    * @param cubbles
    * @returns {{inputSlots: {}, outputSlots: {}}}
    */
   function getSlotsInfo (cubbles) {
-    var slotsInfo = { inputSlots: [], outputSlots: [] };
+    var slotsInfo = { inputSlots: [], outputSlots: [], runtimeId: cubbles.getAttribute('runtime-id') };
     cubbles.slots().forEach(function (slot) {
       addSlot(slot, 'input', slotsInfo.inputSlots);
       addSlot(slot, 'output', slotsInfo.outputSlots);

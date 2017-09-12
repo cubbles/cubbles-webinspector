@@ -56,6 +56,9 @@
 
       sidebar.onShown.addListener(function (window) {
         cubblesSidepanel.window = window;
+        window.postMessageToBackgroundScript = function (name, content) {
+          postMessage(name, content);
+        };
         updateSlotsInfo();
       });
 
