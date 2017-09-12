@@ -63,13 +63,14 @@
    */
   function postSetSlotMsg (e) {
     var slotId = e.target.getAttribute('data-slot-id');
-    if (slotId) {
+    var slotValue = document.querySelector('#' + slotId + 'TF').value
+    if (slotId && slotValue) {
       window.postMessageToBackgroundScript(
         'set-slot-value',
         {
           runtimeId: runtimeId,
           slotId: slotId,
-          slotValue: document.querySelector('#' + slotId + 'TF').value
+          slotValue: slotValue
         }
       );
     }
