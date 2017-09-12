@@ -1,3 +1,4 @@
+/* globals hljs */
 (function () {
   /**
    * Method to update slots information of a cubbles within the sidebar panel
@@ -36,8 +37,12 @@
       var row = table.insertRow(table.rows.length);
       var slotId = row.insertCell(0);
       var value = row.insertCell(1);
+      var codeElement = document.createElement('code');
       slotId.innerHTML = slotInfo.slotId;
-      value.innerHTML = JSON.stringify(slotInfo.value, null, '   ');
+      codeElement.innerHTML = JSON.stringify(slotInfo.value, null, '   ');
+      codeElement.className = 'JSON';
+      value.appendChild(codeElement);
+      hljs.highlightBlock(value);
     }
   }
 
