@@ -38,18 +38,25 @@
     function createSlotInfoRow (slotInfo, table) {
       var row = table.insertRow(table.rows.length);
       var slotId = row.insertCell(0);
-      var value = row.insertCell(1);
+      var type = row.insertCell(1);
+      var value = row.insertCell(2);
+      var setValue = row.insertCell(3);
+      type.innerHTML = slotInfo.type;
+
+      var strongElement = document.createElement('strong');
+      strongElement.innerHTML = slotInfo.slotId;
+      slotId.appendChild(strongElement);
+
       var codeElement = document.createElement('code');
-      slotId.innerHTML = slotInfo.slotId;
       codeElement.innerHTML = JSON.stringify(slotInfo.value, null, '   ');
       codeElement.className = 'JSON';
       value.appendChild(codeElement);
       hljs.highlightBlock(value);
-      var setValue = row.insertCell(2);
       var slotVTF = generateInputForSlotValue(slotInfo.type);
       slotVTF.setAttribute('id', slotInfo.slotId + 'TF');
       var slotVBtn = document.createElement('button');
       slotVBtn.setAttribute('data-slot-id', slotInfo.slotId);
+      slotVBtn.setAttribute('data-slot-type', slotInfo.type);
       slotVBtn.innerHTML = 'Set';
       slotVBtn.addEventListener('click', postSetSlotMsg);
       setValue.appendChild(slotVTF);
@@ -79,14 +86,18 @@
    */
   function postSetSlotMsg (e) {
     var slotId = e.target.getAttribute('data-slot-id');
+    var slotType = e.target.getAttribute('data-slot-type');
     var input = document.querySelector('#' + slotId + 'TF');
     var slotValue = input.value;
     if (slotId && slotValue) {
-      switch (input.type) {
+      switch (slotType) {
+        case 'string':
+          slotValue = '"' + slotValue + '"';
+          break;
         case 'number':
           slotValue = parseInt(slotValue);
           break;
-        case 'checkbox':
+        case 'boolean':
           slotValue = input.checked;
           break;
       }
@@ -95,7 +106,7 @@
         {
           runtimeId: runtimeId,
           slotId: slotId,
-          slotValue: slotValue
+          slotValue: JSON.parse(slotValue)
         }
       );
     }
