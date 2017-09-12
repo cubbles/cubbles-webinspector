@@ -3,33 +3,39 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/sidebar_style.css">
     <title>&lt;cubx-iframe-viewer&gt; demo</title>
 </head>
 
 <body>
-<h1>Input Slots</h1>
-<div>
-    <table id="inputSlotsTable">
-        <thead>
-        <tr>
-            <th>Slot Id</th>
-            <th>Value</th>
-        </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+<div id="noCubblesMessage">
+    <p>The selected element is not a Cubbles component</p>
 </div>
-<h1>Output Slots</h1>
-<div>
-    <table id="outputSlotsTable">
-        <thead>
-        <tr>
-            <th>Slot Id</th>
-            <th>Value</th>
-        </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+<div id="slotsInfo">
+    <h1>Input Slots</h1>
+    <div>
+        <table id="inputSlotsTable">
+            <thead>
+            <tr>
+                <th>Slot Id</th>
+                <th>Value</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+    <h1>Output Slots</h1>
+    <div>
+        <table id="outputSlotsTable">
+            <thead>
+            <tr>
+                <th>Slot Id</th>
+                <th>Value</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 </div>
 <script src="js/sidebar.js"></script>
 </body>

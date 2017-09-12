@@ -1,26 +1,61 @@
 (function () {
+  /**
+   * Method to update slots information of a cubbles within the sidebar panel
+   * @param slotsInfo - {inputSlots: ..., outputSlots: ...}
+   */
   window.setInputSlotsInfo = function (slotsInfo) {
-    setSlotsInfoInTables(slotsInfo.inputSlots, document.querySelector('#inputSlotsTable'));
-    setSlotsInfoInTables(slotsInfo.outputSlots, document.querySelector('#outputSlotsTable'));
+    if (slotsInfo.inputSlots && slotsInfo.outputSlots) {
+      updateSlotsInfoInTables(slotsInfo.inputSlots, document.querySelector('#inputSlotsTable'));
+      updateSlotsInfoInTables(slotsInfo.outputSlots, document.querySelector('#outputSlotsTable'));
+      toggleCubblesMsg(false);
+    } else {
+      toggleCubblesMsg(true);
+    }
   };
 
-  function setSlotsInfoInTables (slots, table) {
+  /**
+   * Update the table that contains the slots info of the selected component (if any)
+   * @param {Array} slots
+   * @param {Element} table
+   */
+  function updateSlotsInfoInTables (slots, table) {
     clearTable(table);
-    slots.forEach(function (slot) {
-      createSlotInfoRow(slot, table);
-    });
-  }
-  function clearTable (table) {
-    for (var i = 1, length = table.rows.length; i < length; i++) {
-      table.deleteRow(1);
+    if (slots) {
+      slots.forEach(function (slot) {
+        createSlotInfoRow(slot, table);
+      });
+    }
+
+    function clearTable (table) {
+      for (var i = 1, length = table.rows.length; i < length; i++) {
+        table.deleteRow(1);
+      }
+    }
+
+    function createSlotInfoRow (slotInfo, table) {
+      var row = table.insertRow(table.rows.length);
+      var slotId = row.insertCell(0);
+      var value = row.insertCell(1);
+      slotId.innerHTML = slotInfo.slotId;
+      value.innerHTML = JSON.stringify(slotInfo.value, null, '   ');
     }
   }
 
-  function createSlotInfoRow (slotInfo, table) {
-    var row = table.insertRow(table.rows.length);
-    var slotId = row.insertCell(0);
-    var value = row.insertCell(1);
-    slotId.innerHTML = slotInfo.slotId;
-    value.innerHTML = JSON.stringify(slotInfo.value, null, '   ');
+  /**
+   * Hide or display the "no cubbles" message and the slots info table
+   * @param {boolean} display
+   */
+  function toggleCubblesMsg (display) {
+    var noCubblesMessage = document.querySelector('#noCubblesMessage');
+    var slotsInfo = document.querySelector('#slotsInfo');
+    var hiddenClassName = 'hidden';
+
+    if (display) {
+      noCubblesMessage.classList.remove(hiddenClassName);
+      slotsInfo.classList.add(hiddenClassName);
+    } else {
+      slotsInfo.classList.remove(hiddenClassName);
+      noCubblesMessage.classList.add(hiddenClassName);
+    }
   }
 })();
