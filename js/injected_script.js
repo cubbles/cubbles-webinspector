@@ -33,6 +33,10 @@
     document.addEventListener('cifReady', handleCifReady);
   }
 
+  /**
+   * Handle a request for the information of slots of a cubbles component
+   * @param {string} runtimeId - RuntimeId of the component
+   */
   function handleSlotsInfoRequest (runtimeId) {
     var message = {};
     if (runtimeId) {
@@ -41,10 +45,16 @@
     postMessage('set-slots-info', message);
   }
 
-  function setSlotValue (cubble, slotId, slotValue) {
+  /**
+   * Set the value of a cubbles component slot
+   * @param {Object} cubbles - Cubbles whose slot is to be updated
+   * @param {string} slotId - Id of the slot to be updated
+   * @param {*} slotValue - Value to be set to the slot
+   */
+  function setSlotValue (cubbles, slotId, slotValue) {
     var setMethodName = 'set' + slotId.charAt(0).toUpperCase() + slotId.slice(1);
-    if (cubble && cubble[setMethodName]) {
-      cubble[setMethodName](slotValue);
+    if (cubbles && cubbles[setMethodName]) {
+      cubbles[setMethodName](slotValue);
     }
   }
 

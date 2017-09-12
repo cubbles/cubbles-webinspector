@@ -55,19 +55,23 @@
       setValue.appendChild(slotVTF);
       setValue.appendChild(slotVBtn);
     }
+  }
 
-    function postSetSlotMsg (e) {
-      var slotId = e.target.getAttribute('data-slot-id');
-      if (slotId) {
-        window.postMessageToBackgroundScript(
-          'set-slot-value',
-          {
-            runtimeId: runtimeId,
-            slotId: slotId,
-            slotValue: document.querySelector('#' + slotId + 'TF').value
-          }
-        );
-      }
+  /**
+   * Listener function to use when set buttons are clicked
+   * @param e
+   */
+  function postSetSlotMsg (e) {
+    var slotId = e.target.getAttribute('data-slot-id');
+    if (slotId) {
+      window.postMessageToBackgroundScript(
+        'set-slot-value',
+        {
+          runtimeId: runtimeId,
+          slotId: slotId,
+          slotValue: document.querySelector('#' + slotId + 'TF').value
+        }
+      );
     }
   }
 
