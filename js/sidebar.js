@@ -46,7 +46,7 @@
       value.appendChild(codeElement);
       hljs.highlightBlock(value);
       var setValue = row.insertCell(2);
-      var slotVTF = document.createElement('input');
+      var slotVTF = generateInputForSlotValue(slotInfo.type);
       slotVTF.setAttribute('id', slotInfo.slotId + 'TF');
       var slotVBtn = document.createElement('button');
       slotVBtn.setAttribute('data-slot-id', slotInfo.slotId);
@@ -54,6 +54,22 @@
       slotVBtn.addEventListener('click', postSetSlotMsg);
       setValue.appendChild(slotVTF);
       setValue.appendChild(slotVBtn);
+    }
+
+    function generateInputForSlotValue (type) {
+      var input = document.createElement('input');
+      switch (type) {
+        case 'number':
+          input.setAttribute('type', 'number');
+          break;
+        case 'boolean':
+          input.setAttribute('type', 'checkbox');
+          break;
+        default:
+          input.setAttribute('type', 'text');
+          break;
+      }
+      return input;
     }
   }
 
@@ -63,8 +79,17 @@
    */
   function postSetSlotMsg (e) {
     var slotId = e.target.getAttribute('data-slot-id');
-    var slotValue = document.querySelector('#' + slotId + 'TF').value
+    var input = document.querySelector('#' + slotId + 'TF');
+    var slotValue = input.value;
     if (slotId && slotValue) {
+      switch (input.type) {
+        case 'number':
+          slotValue = parseInt(slotValue);
+          break;
+        case 'checkbox':
+          slotValue = input.checked;
+          break;
+      }
       window.postMessageToBackgroundScript(
         'set-slot-value',
         {
