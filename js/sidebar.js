@@ -49,8 +49,11 @@
 
       var codeElement = document.createElement('code');
       codeElement.innerHTML = JSON.stringify(slotInfo.value, null, '   ');
-      codeElement.className = 'JSON';
-      value.appendChild(codeElement);
+      codeElement.classList.add('JSON');
+      var codeContainer = document.createElement('div');
+      codeContainer.classList.add('table-code');
+      codeContainer.appendChild(codeElement);
+      value.appendChild(codeContainer);
       hljs.highlightBlock(value);
       var slotVTF = generateInputForSlotValue(slotInfo.type);
       slotVTF.setAttribute('id', slotInfo.slotId + 'TF');
