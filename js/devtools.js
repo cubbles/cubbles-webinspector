@@ -21,7 +21,9 @@
         }
         break;
       case 'cif-ready':
-        requestInformation(true);
+        if (cubblesPanel) {
+          requestInformation(true);
+        }
         break;
       case 'tab-updated':
         postExecuteContentScript();
