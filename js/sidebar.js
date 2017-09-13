@@ -76,7 +76,7 @@
           input.setAttribute('type', 'checkbox');
           break;
         default:
-          input.setAttribute('type', 'text');
+          input = document.createElement('textarea');
           break;
       }
       return input;
@@ -91,38 +91,43 @@
     var slotId = e.target.getAttribute('data-slot-id');
     var slotType = e.target.getAttribute('data-slot-type');
     var input = document.querySelector('#' + slotId + 'TF');
-    var slotValue = input.value;
+    var slotValue = parseSlotValue(input, slotType, slotId);
     if (slotId && slotValue) {
-      switch (slotType) {
-        case 'string':
-          slotValue = '"' + slotValue + '"';
-          break;
-        case 'number':
-          slotValue = parseInt(slotValue);
-          break;
-        case 'boolean':
-          slotValue = input.checked;
-          break;
-        default:
-          try {
-            slotValue = JSON.parse(slotValue);
-          } catch (e) {
-            logErrorMsg('It was not possible to parse the value for the \'' + slotId + '\' slot. ' +
-              'Remember that it should be JSON valid. Please check the syntax.');
-            slotValue = '';
-          }
-          break;
-      }
-      if (slotValue) {
-        window.postMessageToBackgroundScript(
-          'set-slot-value',
-          {
-            runtimeId: runtimeId,
-            slotId: slotId,
-            slotValue: slotValue
-          }
-        );
-      }
+      window.postMessageToBackgroundScript(
+        'set-slot-value',
+        {
+          runtimeId: runtimeId,
+          slotId: slotId,
+          slotValue: slotValue
+        }
+      );
+    }
+  }
+
+  /**
+   * Parse a slot value so that it is valid to be set to the component
+   * @param {string} slotType - Type of the slot
+   * @param {string} slotId - Id of the slot
+   * @param {Element} input - Input or textarea element
+   * @returns {*}
+   */
+  function parseSlotValue (input, slotType, slotId) {
+    var slotValue = input.value;
+    switch (slotType) {
+      case 'string':
+        return slotValue;
+      case 'number':
+        return parseInt(slotValue);
+      case 'boolean':
+        return input.checked;
+      default:
+        try {
+          return JSON.parse(slotValue);
+        } catch (e) {
+          logErrorMsg('It was not possible to parse the value for the \'' + slotId + '\' slot. ' +
+            'Remember that it should be JSON valid. Please check the syntax.');
+          return '';
+        }
     }
   }
 
