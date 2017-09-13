@@ -1,4 +1,4 @@
-/* globals hljs */
+/* globals hljs, chrome */
 (function () {
   var runtimeId;
   /**
@@ -100,15 +100,26 @@
         case 'boolean':
           slotValue = input.checked;
           break;
+        default:
+          try {
+            slotValue = JSON.parse(slotValue);
+          } catch (e) {
+            logErrorMsg('It was not possible to parse the value for the \'' + slotId + '\' slot. ' +
+              'Remember that it should be JSON valid. Please check the syntax.');
+            slotValue = '';
+          }
+          break;
       }
-      window.postMessageToBackgroundScript(
-        'set-slot-value',
-        {
-          runtimeId: runtimeId,
-          slotId: slotId,
-          slotValue: JSON.parse(slotValue)
-        }
-      );
+      if (slotValue) {
+        window.postMessageToBackgroundScript(
+          'set-slot-value',
+          {
+            runtimeId: runtimeId,
+            slotId: slotId,
+            slotValue: slotValue
+          }
+        );
+      }
     }
   }
 
@@ -128,5 +139,13 @@
       slotsInfo.classList.remove(hiddenClassName);
       noCubblesMessage.classList.add(hiddenClassName);
     }
+  }
+
+  /**
+   * Log an error in the console of the inspected window
+   * @param {string} ErrorMsg Error to be logged
+   */
+  function logErrorMsg (ErrorMsg) {
+    chrome.devtools.inspectedWindow.eval('console.error("' + ErrorMsg + '")');
   }
 })();
