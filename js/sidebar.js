@@ -41,29 +41,41 @@
       var type = row.insertCell(1);
       var value = row.insertCell(2);
       var setValue = row.insertCell(3);
+
       type.innerHTML = slotInfo.type;
-
-      var strongElement = document.createElement('strong');
-      strongElement.innerHTML = slotInfo.slotId;
-      slotId.appendChild(strongElement);
-
-      var codeElement = document.createElement('code');
-      codeElement.innerHTML = JSON.stringify(slotInfo.value, null, '   ');
-      codeElement.classList.add('JSON');
-      var codeContainer = document.createElement('div');
-      codeContainer.classList.add('table-code');
-      codeContainer.appendChild(codeElement);
-      value.appendChild(codeContainer);
+      slotId.appendChild(createElementForCell('slotId', slotInfo));
+      value.appendChild(createElementForCell('slotValue', slotInfo));
       hljs.highlightBlock(value);
-      var slotVTF = generateInputForSlotValue(slotInfo.type);
-      slotVTF.setAttribute('id', slotInfo.slotId + 'TF');
-      var slotVBtn = document.createElement('button');
-      slotVBtn.setAttribute('data-slot-id', slotInfo.slotId);
-      slotVBtn.setAttribute('data-slot-type', slotInfo.type);
-      slotVBtn.innerHTML = 'Set';
-      slotVBtn.addEventListener('click', postSetSlotMsg);
-      setValue.appendChild(slotVTF);
-      setValue.appendChild(slotVBtn);
+      setValue.appendChild(createElementForCell('setValue', slotInfo));
+    }
+
+    function createElementForCell (cellName, slotInfo) {
+      switch (cellName) {
+        case 'slotId':
+          var strongElement = document.createElement('strong');
+          strongElement.innerHTML = slotInfo.slotId;
+          return strongElement;
+        case 'slotValue':
+          var codeElement = document.createElement('code');
+          codeElement.innerHTML = JSON.stringify(slotInfo.value, null, '   ');
+          codeElement.classList.add('JSON');
+          var codeContainer = document.createElement('div');
+          codeContainer.classList.add('table-code');
+          codeContainer.appendChild(codeElement);
+          return codeContainer;
+        case 'setValue':
+          var slotVTF = generateInputForSlotValue(slotInfo.type);
+          slotVTF.setAttribute('id', slotInfo.slotId + 'TF');
+          var slotVBtn = document.createElement('button');
+          slotVBtn.setAttribute('data-slot-id', slotInfo.slotId);
+          slotVBtn.setAttribute('data-slot-type', slotInfo.type);
+          slotVBtn.innerHTML = 'Set';
+          slotVBtn.addEventListener('click', postSetSlotMsg);
+          var setValueDiv = document.createElement('div');
+          setValueDiv.appendChild(slotVTF);
+          setValueDiv.appendChild(slotVBtn);
+          return setValueDiv;
+      }
     }
 
     function generateInputForSlotValue (type) {
