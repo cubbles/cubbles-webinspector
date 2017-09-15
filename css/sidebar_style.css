@@ -6,3 +6,7 @@
     max-height: 5em;
     max-width: 8em;
 }
+
+.right-button {
+    float: right;
+}

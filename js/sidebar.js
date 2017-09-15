@@ -69,6 +69,7 @@
           var slotVBtn = document.createElement('button');
           slotVBtn.setAttribute('data-slot-id', slotInfo.slotId);
           slotVBtn.setAttribute('data-slot-type', slotInfo.type);
+          slotVBtn.classList.add('right-button');
           slotVBtn.innerHTML = 'Set';
           slotVBtn.addEventListener('click', postSetSlotMsg);
           var setValueDiv = document.createElement('div');
