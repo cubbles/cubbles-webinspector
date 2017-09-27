@@ -10,6 +10,25 @@
 .right-button {
     float: right;
 }
+.set-slot-input {
+    width: 100%;
+}
+
+#slotsInfo, #inputSlotsTable, #outputSlotsTable {
+    width: 100%;
+}
+
+.slot-id-col {
+    width: 20%;
+}
+
+.current-value-col {
+    width: 40%;
+}
+
+.set-value-col{
+    width: 40%;
+}
 
 .tooltip {
     position: relative;
