@@ -14,6 +14,10 @@
     width: 100%;
 }
 
+.set-slot-container [type=checkbox] {
+    width: auto !important;
+}
+
 #slotsInfo, #inputSlotsTable, #outputSlotsTable {
     width: 100%;
 }
@@ -42,7 +46,7 @@
     color: #333;
     padding: 5px;
     max-width: 20em;
-
+    min-width: 10em;
 
     /* Position the tooltip text */
     position: absolute;
