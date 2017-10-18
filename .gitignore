@@ -8,6 +8,7 @@
 *.out
 *.pid
 *.gz
+*.zip
 
 pids
 logs
