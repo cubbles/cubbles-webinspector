@@ -13,7 +13,7 @@
 .right-button {
     float: right;
 }
-.set-slot-input {
+.set-slot-input, .set-slot-container {
     width: 100%;
     box-sizing: border-box;
     padding: 0.2em;
@@ -23,6 +23,10 @@
     width: auto !important;
 }
 
+.set-slot-container textarea {
+    min-height: 5em;
+}
+
 #slotsInfo, #inputSlotsTable, #outputSlotsTable {
     width: 100%;
 }
@@ -30,6 +34,7 @@
 #slotsInfo th, #slotsInfo td {
     text-align: left;
     margin: 0.5em;
+    vertical-align: top;
 }
 
 #slotsInfo table {
