@@ -6,9 +6,8 @@
     color: #999999;
 }
 
-.table-code {
-    max-height: 5em;
-    max-width: 8em;
+.table-code code {
+    max-height: 60em;
 }
 
 .right-button {
@@ -35,6 +34,7 @@
 
 #slotsInfo table {
     border-collapse: collapse;
+    table-layout: fixed
 }
 
 #slotsInfo tr:nth-child(even){
