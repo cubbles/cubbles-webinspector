@@ -51,12 +51,22 @@
 }
 
 .current-value-col {
-    width: 40%;
+    width: 35%;
 }
 
-.set-value-col{
-    width: 40%;
+.use-current-col {
+    width: 10%;
 }
+
+.use-current-container {
+    text-align: center;
+    width: 100%;
+}
+
+.set-value-col {
+    width: 35%;
+}
+
 
 .tooltip {
     position: relative;
