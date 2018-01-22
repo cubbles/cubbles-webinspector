@@ -10,6 +10,10 @@
     max-height: 60em;
 }
 
+.slot-value-element {
+    border: 1px solid #aaa;
+    padding: 0.5em 1.5em;
+}
 .right-button {
     float: right;
 }
