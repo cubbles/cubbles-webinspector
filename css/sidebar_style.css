@@ -6,30 +6,56 @@
     color: #999999;
 }
 
-.table-code code {
-    max-height: 60em;
+pre {
+    max-height: 40em;
+    overflow: auto
+}
+
+.slot-value-element-container {
+    min-height: 5em;
+}
+
+td {
+    height:100%;
+    position: relative;
+}
+
+textarea.set-slot-input {
+    overflow-y: auto;
+    position: absolute;
+    width: 100%;
+    top: 2px;
+    bottom: 2em;
 }
 
 .slot-value-element {
     border: 1px solid #aaa;
     padding: 0.5em 1.5em;
 }
-.right-button {
+
+.right-button:not([data-slot-type='boolean']):not([data-slot-type='number']) {
+    bottom: 2px;
+    right: 0;
+    position: absolute;
+}
+
+.right-button{
     float: right;
 }
+
 .set-slot-input, .set-slot-container {
     width: 100%;
     box-sizing: border-box;
-    padding: 0.2em;
 }
 
 .set-slot-container [type=checkbox] {
     width: auto !important;
 }
 
-.set-slot-container textarea {
-    min-height: 5em;
+.set-slot-container {
+    overflow-y: auto;
 }
+
 
 #slotsInfo, #inputSlotsTable, #outputSlotsTable {
     width: 100%;
@@ -70,7 +96,6 @@
 .set-value-col {
     width: 35%;
 }
-
 
 .tooltip {
     position: relative;
