@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>&lt;cubx-generic-component-viewer&gt; demo</title>
+
+    <script src="../../../cubx.core.rte@2.4.0/webcomponents-lite/webcomponents-lite.js"></script>
+
+    <script>
+        window.cubx = {
+            "CRCInit": {
+                "rootDependencies": [
+                    {
+                        "webpackageId": "bootstrap-3.3.5@1.1.1",
+                        "artifactId": "bootstrap-bootstrap-css-only"
+                    }
+                ]
+            }
+        }
+    </script>
+    <script src="../../../cubx.core.rte@2.4.0/crc-loader/js/main.js" data-crcinit-loadcif="true"></script>
+
+</head>
+<body>
+<!--  Place cubbles components there. -->
+<cubx-generic-component-viewer cubx-webpackage-id="this"></cubx-generic-component-viewer>
+
+<script>
+    (function () {
+        'use strict';
+        var genericViewer = document.querySelector('cubx-generic-component-viewer');
+        var definitions = {
+            components: {
+                'cubx-generic-mapper': {
+                    'artifactId': 'cubx-generic-mapper',
+                    'slots': [
+                        {'slotId': 'mappedString', 'direction': ['output']},
+                        {'slotId': 'inputString', 'direction': ['input']}
+                    ],
+                    'webpackageId': 'generic-mapper@1.0.0'
+                },
+                'cubx-marked-element': {
+                    'artifactId': 'cubx-marked-element',
+                    'slots': [
+                        {'slotId': 'markdown', 'direction': ['input']}
+                    ],
+                    'webpackageId': 'com.incowia.cubx-marked-element@1.1.1'
+                },
+                'cubx-ckeditor': {
+                    'artifactId': 'cubx-ckeditor',
+                    'slots': [
+                        {'slotId': 'dataAfterChange', 'direction': ['output']},
+                        {'slotId': 'dataAfterBlur', 'direction': ['output']},
+                        {'slotId': 'data', 'direction': ['input']}
+                    ],
+                    'webpackageId': 'ckeditor@1.0.0'
+                }
+            },
+            members: [
+                {'memberId': 'genericMapper', 'artifactId': 'cubx-generic-mapper'},
+                {'memberId': 'mdViewer', 'artifactId': 'cubx-marked-element'},
+                {'memberId': 'ckeditor', 'artifactId': 'cubx-ckeditor'}
+            ],
+            connections: [
+                {
+                    'connectionId': 'htmlToMdThisConnectionIdIsLongerThanFiftyCharacters',
+                    'copyValue': true,
+                    'destination': {'memberIdRef': 'mdViewer', 'slot': 'markdown'},
+                    'source': {'memberIdRef': 'genericMapper', 'slot': 'mappedString'},
+                    'hookFunction': 'sampleFunction'
+                },
+                {
+                    'connectionId': 'contentConnection',
+                    'copyValue': true,
+                    'destination': {'memberIdRef': 'genericMapper', 'slot': 'inputString'},
+                    'source': {'memberIdRef': 'ckeditor', 'slot': 'dataAfterChange'},
+                    'hookFunction': ''
+                }
+            ],
+            componentArtifactId: ''
+        };
+        document.addEventListener('cifReady', function () {
+            genericViewer._setViewHolderHeight(window.innerHeight * 0.6 + 'px');
+            genericViewer.setHighlightedMember('genericMapper');
+            genericViewer.setDefinitions(definitions);
+        });
+    })()
+</script>
+</body>
+</html>

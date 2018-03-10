@@ -1,0 +1,52 @@
+{
+    "name": "klayjsd3-0.3.5",
+    "groupId": "",
+    "version": "1.1.0",
+    "modelVersion": "9.1.0",
+    "docType": "webpackage",
+    "author": {
+        "name": "Edwin Gamboa",
+        "email": "edwin.gamboa@incowia.com"
+    },
+    "contributors": [
+        {
+            "name": "Judit Ross",
+            "email": "judit.ross@incowia.com"
+        }
+    ],
+    "homepage": "https://github.com/OpenKieler/klayjs",
+    "license": "MIT",
+    "keywords": [
+        "library",
+        "klayjsd3",
+        "klay",
+        "3rd-party",
+        "diagrams"
+    ],
+    "man": [],
+    "artifacts": {
+        "utilities": [
+            {
+                "artifactId": "klayjs-d3",
+                "description": "Wrapper for klayjs-d3 extension 0.3.5",
+                "resources": [
+                    {
+                        "prod": "klayjs-d3.min.html",
+                        "dev": "klayjs-d3.html"
+                    }
+                ],
+                "dependencies": [
+                    {
+                        "webpackageId": "klayjs-0.4.1@1.1.0",
+                        "artifactId": "klayjs"
+                    },
+                    {
+                        "webpackageId": "d3-3.5.3@1.0.0",
+                        "artifactId": "d3",
+                        "endpointId": "html-import"
+                    }
+                ]
+            }
+        ]
+    }
+}

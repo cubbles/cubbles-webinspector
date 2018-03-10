@@ -1,0 +1,41 @@
+{
+  "name": "polymer-1.2.3",
+  "groupId": "",
+  "version": "1.0.2",
+  "modelVersion": "8.1.0",
+  "docType": "webpackage",
+  "author": {
+    "name": "Judit Ross",
+    "email": "judit.ross@incowia.com"
+  },
+  "license": "MIT",
+  "keywords": [
+      "library",
+      "polymer",
+      "3rd-party"
+  ],
+  "man": [],
+  "runnables": [
+  ],
+  "artifacts": {
+    "apps": [],
+    "elementaryComponents": [],
+    "compoundComponents": [],
+    "utilities": [
+        {
+            "artifactId": "polymer",
+            "description": "Wrap the polymer library version 1.2.3",
+            "endpoints": [
+                {
+                    "endpointId": "main",
+                    "resources": [
+                        "vendor/polymer/polymer.html"
+                    ],
+                    "dependencies": [
+                    ]
+                }
+            ]
+        }
+    ]
+  }
+}
