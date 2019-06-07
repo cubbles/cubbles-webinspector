@@ -1,0 +1,50 @@
+{
+    "name": "d3-3.5.3",
+    "groupId": "",
+    "version": "1.0.0",
+    "modelVersion": "8.0.0",
+    "docType": "webpackage",
+    "author": {
+        "name": "Judit Ross",
+        "email": "judit.ross@incowia.com"
+    },
+    "license": "MIT",
+    "keywords": [
+        "library",
+        "d3",
+        "3rd-party"
+    ],
+    "homepage": "http://d3js.org/",
+    "man": [],
+    "runnables": [],
+    "artifacts": {
+        "utilities": [
+            {
+                "artifactId": "d3",
+                "description": "Wrapper for origin D3 (Data-Driven Documents) Javascript Library version 3.5.3",
+                "endpoints": [
+                    {
+                        "endpointId": "main",
+                        "description": "Default, included javascript libraries.",
+                        "resources": [
+                            {
+                                "dev": "vendor/d3.js",
+                                "prod": "vendor/d3.min.js"
+                            }
+                        ]
+                    },
+                    {
+                        "endpointId": "html-import",
+                        "description": "Javascript libraries will be included by html import. (Usage by polymer components.) ",
+                        "resources": [
+                            {
+                                "dev": "vendor/d3.html",
+                                "prod": "vendor/d3.min.html"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

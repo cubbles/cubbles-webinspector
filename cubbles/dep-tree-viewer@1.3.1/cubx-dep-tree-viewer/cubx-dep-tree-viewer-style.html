@@ -1,0 +1,53 @@
+<dom-module id="cubx-dep-tree-viewer-style">
+    <template>
+        <!--
+        Get help: https://www.polymer-project.org/1.0/docs/devguide/styling.html#xscope-styling-details
+        -->
+        <style>
+            :host {
+                display: block;
+            }
+
+            .node circle {
+                fill: #999;
+            }
+            .node text {
+                fill: #000;
+                font: 10px sans-serif;
+            }
+
+            .node--internal circle {
+                fill: #555;
+            }
+
+            .node--internal text {
+                text-shadow: 0 1px 0 #fff, 0 -1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff;
+            }
+
+            .link {
+                fill: none;
+                stroke: #555;
+                stroke-opacity: 0.4;
+                stroke-width: 1px;
+            }
+
+            .svgContainer {
+                border: solid 1px #ddd;
+                overflow: hidden;
+                resize: vertical;
+            }
+
+            .info_tooltip{
+                background: #fff;
+                box-shadow: 0 0 5px #999999;
+                color: #333;
+                font-size: 14px;
+                position: fixed;
+                padding: 5px;
+                max-width: 16em;
+                word-wrap: break-word;
+                z-index: 1060;
+            }
+        </style>
+    </template>
+</dom-module>

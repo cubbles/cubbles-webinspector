@@ -1,0 +1,41 @@
+{
+  "name": "d3-tip-0.6.7",
+  "groupId": "",
+  "version": "1.0.0",
+  "modelVersion": "9.1.1",
+  "docType": "webpackage",
+  "author": {
+    "name": "Edwin Gamboa",
+    "email": "edwingamboa355@gmail.com"
+  },
+  "license": "MIT",
+  "keywords": [],
+  "man": [],
+  "artifacts": {
+    "apps": [
+      {
+        "artifactId": "docs",
+        "description": "Generated webpackage documentation.",
+        "runnables": [
+          {
+            "name": "docs",
+            "path": "/index.html",
+            "description": "Show the interface of this component."
+          }
+        ]
+      }
+    ],
+    "elementaryComponents": [],
+    "compoundComponents": [],
+    "utilities": [
+      {
+        "artifactId": "d3-tip",
+        "description": "Utility to use the d3-tip library v 0.6.7 This is recommended for you use with webcomponents.",
+        "resources": [
+          "html-import.html"
+        ],
+        "dependencies": []
+      }
+    ]
+  }
+}

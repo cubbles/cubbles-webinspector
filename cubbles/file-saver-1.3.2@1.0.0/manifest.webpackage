@@ -1,0 +1,44 @@
+{
+  "name": "file-saver-1.3.2",
+  "groupId": "",
+  "version": "1.0.0",
+  "modelVersion": "9.1.1",
+  "docType": "webpackage",
+  "author": {
+    "name": "Edwin Gamboa",
+    "email": "edwingamboa355@gmail.com"
+  },
+  "license": "MIT",
+  "keywords": [],
+  "man": [],
+  "artifacts": {
+    "apps": [
+      {
+        "artifactId": "docs",
+        "description": "Generated webpackage documentation.",
+        "runnables": [
+          {
+            "name": "docs",
+            "path": "/index.html",
+            "description": "Show the interface of this component."
+          }
+        ]
+      }
+    ],
+    "elementaryComponents": [],
+    "compoundComponents": [],
+    "utilities": [
+      {
+        "artifactId": "file-saver",
+        "description": "Utility to use the FileSaver.js library v 1.3.2",
+        "resources": [
+          {
+            "prod": "vendor/file-saver.min.html",
+            "dev": "vendor/file-saver.html"
+          }
+        ],
+        "dependencies": []
+      }
+    ]
+  }
+}

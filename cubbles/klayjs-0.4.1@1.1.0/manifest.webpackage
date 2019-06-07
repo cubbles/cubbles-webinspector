@@ -1,0 +1,39 @@
+{
+    "name": "klayjs-0.4.1",
+    "groupId": "",
+    "version": "1.1.0",
+    "modelVersion": "9.1.0",
+    "docType": "webpackage",
+    "author": {
+        "name": "Edwin Gamboa",
+        "email": "edwin.gamboa@incowia.com"
+    },
+    "contributors": [
+        {
+            "name": "Judit Ross",
+            "email": "judit.ross@incowia.com"
+        }
+    ],
+    "homepage": "https://github.com/OpenKieler/klayjs",
+    "license": "MIT",
+    "keywords": [
+        "library",
+        "klayjs",
+        "klay",
+        "3rd-party",
+        "diagrams"
+    ],
+    "man": [],
+    "artifacts": {
+        "utilities": [
+            {
+                "artifactId": "klayjs",
+                "description": "Wrapper for klayjs library 0.4.1",
+                "resources": [
+                    "klayjs.html"
+                ],
+                "dependencies": []
+            }
+        ]
+    }
+}

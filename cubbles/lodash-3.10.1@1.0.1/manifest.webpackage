@@ -1,0 +1,51 @@
+{
+    "name": "lodash-3.10.1",
+    "groupId": "",
+    "version": "1.0.1",
+    "modelVersion": "8.0.0",
+    "description": "This webpackage contains the lodash library in version 3.10.1.",
+    "docType": "webpackage",
+    "author": {
+        "name": "Judit Ross",
+        "email": "judit.ross@incowia.com"
+    },
+    "homepage": "https://lodash.com/",
+    "license": "MIT",
+    "keywords": [
+        "library",
+        "lodash",
+        "3rd-party"
+    ],
+    "man": [],
+    "runnables": [
+    ],
+    "artifacts": {
+        "utilities": [
+            {
+                "artifactId": "lodash",
+                "description": "This contains the lodash library in version 3.10.1.",
+                "endpoints": [
+                    {
+                        "endpointId": "main",
+                        "resources": [
+                            {
+                                "dev": "vendor/lodash.js",
+                                "prod": "vendor/lodash.min.js"
+                            }
+                        ]
+                    },
+                    {
+                        "endpointId": "html-import",
+                        "description": "Javascript libraries will be included by html import. (Usage by polymer components.) ",
+                        "resources": [
+                            {
+                                "dev": "vendor/lodash.html",
+                                "prod": "vendor/lodash.min.html"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}
