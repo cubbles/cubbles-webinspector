@@ -5,19 +5,37 @@
     <meta charset="UTF-8">
     <title>&lt;cubx-iframe-viewer&gt; demo</title>
 
+    <script src="vendor/jquery/jquery-2.1.4.min.js"></script>
+    <script src="vendor/json-viewer/jquery.json-viewer.js"></script>
+    <script src="vendor/jstree/jstree.min.js"></script>
     <script src="/cubbles/cubx.core.rte@2.4.0/webcomponents-lite/webcomponents-lite.js"></script>
     <script src="lib/deps.js"></script>
     <script src="/cubbles/cubx.core.rte@2.4.0/crc-loader/js/main.js" data-crcinit-loadcif="true"></script>
+    <link rel="stylesheet" type="text/css" href="vendor/json-viewer/jquery.json-viewer.css">
+    <link rel="stylesheet" type="text/css" href="vendor/jstree/themes/default/style.min.css">
+    <link rel="stylesheet" type="text/css" href="css/sidebar_style.css">
 </head>
 
 <body>
-<div class="container">
+<div class="container-fluid">
     <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" id="componentViewerT" href="#componentViewerD">Interface/Dataflow view</a></li>
+        <li class="active"><a data-toggle="tab" id="cubblesInspectorT" href="#cubblesInspectorD">Inspector</a></li>
+        <li><a data-toggle="tab" id="componentViewerT" href="#componentViewerD">Interface/Dataflow view</a></li>
         <li><a data-toggle="tab" id="depsTreeViewerT" href="#depsTreeViewerD">Dependency Tree</a></li>
     </ul>
     <div class="tab-content">
-        <div id="componentViewerD"  class="tab-pane fade in active">
+        <div id="cubblesInspectorD" class="tab-pane fade in active">
+            <div class="row">
+                <div id="cubblesTreeContainer" class="col-lg-4 col-md-5 col-sm-5">
+                    <div id="cubblesTree"></div>
+                </div>
+                <div id="slotsInfo" class="col-lg-8 col-md-7 col-sm-7 hidden"></div>
+                <div id="noCubblesMessage">
+                    <p>The selected element is not a Cubbles component</p>
+                </div>
+            </div>
+        </div>
+        <div id="componentViewerD"  class="tab-pane fade">
             <cubx-generic-component-viewer cubx-webpackage-id="cubx-generic-component-viewer@1.3.4">
             </cubx-generic-component-viewer>
         </div>
@@ -32,5 +50,6 @@
     </div>
 </div>
 <script src="lib/index.js"></script>
+<script src="lib/cubx_sidebar.js"></script>
 </body>
 </html>

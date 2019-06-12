@@ -56,11 +56,6 @@ textarea.set-slot-input {
     overflow-y: auto;
 }
 
-
-#slotsInfo, #inputSlotsTable, #outputSlotsTable {
-    width: 100%;
-}
-
 #slotsInfo th, #slotsInfo td {
     text-align: left;
     margin: 0.5em;
@@ -137,4 +132,13 @@ textarea.set-slot-input {
 .tooltip:hover .tooltiptext {
     display: inline-block;
     opacity: 1;
+}
+
+.jstree-anchor {
+    /*enable wrapping*/
+    white-space : normal !important;
+    /*ensure lower nodes move down*/
+    height : auto !important;
+    /*offset icon width*/
+    padding-right : 1px;
 }
