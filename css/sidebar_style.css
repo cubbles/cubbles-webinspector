@@ -1,137 +1,21 @@
-.hidden {
-    display: none;
-}
-
-#noCubblesMessage {
-    color: #999999;
-}
-
 pre {
     max-height: 40em;
     overflow: auto
 }
 
-.slot-value-element-container {
-    min-height: 5em;
+div.CodeMirror {
+    border: 1px solid #ddd;
 }
 
-td {
-    height:100%;
-    position: relative;
+.body .row {
+    border-bottom: 1px solid #ddd;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
 }
 
-textarea.set-slot-input {
-    overflow-y: auto;
-    position: absolute;
-    width: 100%;
-    top: 2px;
-    bottom: 2em;
-}
-
-.slot-value-element {
-    border: 1px solid #aaa;
-    padding: 0.5em 1.5em;
-}
-
-.right-button:not([data-slot-type='boolean']):not([data-slot-type='number']) {
-    bottom: 2px;
-    right: 0;
-    position: absolute;
-}
-
-.right-button{
-    float: right;
-}
-
-.set-slot-input, .set-slot-container {
-    width: 100%;
-    box-sizing: border-box;
-}
-
-.set-slot-container [type=checkbox] {
-    width: auto !important;
-}
-
-.set-slot-container {
-    overflow-y: auto;
-}
-
-#slotsInfo th, #slotsInfo td {
-    text-align: left;
-    margin: 0.5em;
-    vertical-align: top;
-}
-
-#slotsInfo table {
-    border-collapse: collapse;
-    table-layout: fixed
-}
-
-#slotsInfo tr:nth-child(even){
-    background-color: #f2f2f2
-}
-
-.slot-id-col {
-    width: 20%;
-}
-
-.current-value-col {
-    width: 35%;
-}
-
-.use-current-col {
-    width: 10%;
-}
-
-.use-current-container {
-    text-align: center;
-    width: 100%;
-}
-
-.set-value-col {
-    width: 35%;
-}
-
-.tooltip {
-    position: relative;
-    display: inline-block;
-    padding-left: 0.5em;
-}
-
-.tooltip .tooltiptext {
-    display: none;
-    background: #fff;
-    box-shadow: 0 0 5px #999999;
-    color: #333;
-    padding: 5px;
-    max-width: 20em;
-    min-width: 10em;
-
-    /* Position the tooltip text */
-    position: absolute;
-    z-index: 10;
-    top: 125%;
-    left: 50%;
-
-    /* Fade in tooltip */
-    opacity: 0;
-    transition: opacity 1s;
-}
-
-.tooltip .tooltiptext::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-}
-
-.tooltip:hover {
-    cursor: pointer;
-}
-
-.tooltip:hover .tooltiptext {
-    display: inline-block;
-    opacity: 1;
+div.head {
+    background-color: #ddd;
+    padding: 0.5em;
 }
 
 .jstree-anchor {

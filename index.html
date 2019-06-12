@@ -12,10 +12,17 @@
     <script src="/cubbles/cubx.core.rte@2.4.0/webcomponents-lite/webcomponents-lite.js"></script>
     <script src="lib/deps.js"></script>
     <script src="/cubbles/cubx.core.rte@2.4.0/crc-loader/js/main.js" data-crcinit-loadcif="true"></script>
-    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="vendor/json-viewer/jquery.json-viewer.css">
-    <link rel="stylesheet" type="text/css" href="vendor/jstree/themes/default/style.min.css">
-    <link rel="stylesheet" type="text/css" href="css/sidebar_style.css">
+    <script src="vendor/codemirror-5.45.0/lib/codemirror.js"></script>
+    <script src="vendor/codemirror-5.45.0/mode/javascript/javascript.js"></script>
+    <script src="vendor/codemirror-5.45.0/addon/edit/closebrackets.js"></script>
+    <script src="vendor/codemirror-5.45.0/addon/edit/matchbrackets.js"></script>
+
+    <link rel="stylesheet" href="vendor/json-viewer/jquery.json-viewer.css">
+    <link rel="stylesheet" href="vendor/jstree/themes/default/style.min.css">
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/sidebar_style.css">
+    <link rel="stylesheet" href="vendor/codemirror-5.45.0/lib/codemirror.css" />
+
 </head>
 
 <body>
@@ -28,10 +35,10 @@
     <div class="tab-content">
         <div id="cubblesInspectorD" class="tab-pane fade in active">
             <div class="row">
-                <div id="cubblesTreeContainer" class="col-lg-4 col-md-5 col-sm-5">
+                <div id="cubblesTreeContainer" class="panel panel-default col-lg-4 col-md-5 col-sm-5">
                     <div id="cubblesTree"></div>
                 </div>
-                <div id="slotsInfo" class="col-lg-8 col-md-7 col-sm-7 hidden"></div>
+                <div id="slotsInfo" class="panel panel-default col-lg-8 col-md-7 col-sm-7"></div>
                 <div id="noCubblesMessage">
                     <p>The selected element is not a Cubbles component</p>
                 </div>
