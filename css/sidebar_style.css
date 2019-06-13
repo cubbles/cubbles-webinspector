@@ -15,6 +15,9 @@ div.CodeMirror {
 
 div.head {
     background-color: #ddd;
+}
+
+div.body, div.head{
     padding: 0.5em;
 }
 
@@ -25,4 +28,9 @@ div.head {
     height : auto !important;
     /*offset icon width*/
     padding-right : 1px;
+}
+
+.no-gutter > [class*='col-'] {
+    padding-right:0;
+    padding-left:0;
 }
