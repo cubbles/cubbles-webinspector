@@ -3,8 +3,13 @@ pre {
     overflow: auto
 }
 
-div.CodeMirror {
+.CodeMirror {
     border: 1px solid #ddd;
+    height: auto !important;
+}
+
+.CodeMirror-scroll {
+    max-height: 35em;
 }
 
 .body .row {
