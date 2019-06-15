@@ -50,3 +50,19 @@ div.body, div.head{
     top: -9999px !important;
     left: -9999px !important;
 }
+
+.tag-name {
+    color: #B266AD;
+}
+
+.attribute-name {
+    color: #994500; 
+}
+
+.attribute-value {
+    color: #1C23A6;
+}
+
+#cubblesTreeContainer {
+    padding-right: 2em;
+}
