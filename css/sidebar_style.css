@@ -3,6 +3,11 @@ pre {
     overflow: auto
 }
 
+.CodeMirror-focused {
+    outline: auto 5px -webkit-focus-ring-color;
+    outline-offset: 0;
+}
+
 .CodeMirror {
     border: 1px solid #ddd;
     height: auto !important;
@@ -38,4 +43,10 @@ div.body, div.head{
 .no-gutter > [class*='col-'] {
     padding-right:0;
     padding-left:0;
+}
+
+.hidden {
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important;
 }
