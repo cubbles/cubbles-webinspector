@@ -79,3 +79,12 @@ div.body, div.head{
     margin: 0 !important;
 }
 
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 10px 1fr;
+}
+  
+.vertical-gutter {
+    grid-area: 1 / 2 / 2 / 2;
+    cursor: ew-resize;
+}

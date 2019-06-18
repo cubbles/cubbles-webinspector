@@ -16,6 +16,7 @@
     <script src="vendor/codemirror-5.45.0/mode/javascript/javascript.js"></script>
     <script src="vendor/codemirror-5.45.0/addon/edit/closebrackets.js"></script>
     <script src="vendor/codemirror-5.45.0/addon/edit/matchbrackets.js"></script>
+    <script src="vendor/splijs1.0.9/split-grid.min.js"></script>
 
     <link rel="stylesheet" href="vendor/json-viewer/jquery.json-viewer.css">
     <link rel="stylesheet" href="vendor/jstree/themes/default/style.min.css">
@@ -34,8 +35,8 @@
     </ul>
     <div class="tab-content">
         <div id="cubblesInspectorD" class="tab-pane fade in active">
-            <div class="row no-gutter">
-                <div id="cubblesTreeContainer" class="panel panel-default col-lg-4 col-md-5 col-sm-5">
+            <div class="grid">
+                <div id="cubblesTreeContainer" class="panel panel-default">
                     <div id="cubblesTreeConfigContainer">
                         <label>Options: </label>
                         <label class="checkbox-inline"><input type="checkbox" id="highlightCubbleCB" checked>Highlight in DOM</label>
@@ -44,7 +45,8 @@
                     <hr>
                     <div id="cubblesTree"></div>
                 </div>
-                <div id="slotsInfo" class="panel panel-default col-lg-8 col-md-7 col-sm-7"></div>
+                <div id="slotsInfo" class="panel panel-default"></div>
+                <div class="vertical-gutter"></div>
             </div>
         </div>
         <div id="componentViewerD"  class="tab-pane fade">
@@ -59,7 +61,6 @@
                 </cubx-core-init>
             </cubx-dep-tree-viewer>
         </div>
-    </div>
 </div>
 <script src="lib/index.js"></script>
 <script src="lib/inspector.js"></script>
