@@ -38,6 +38,10 @@ div.body, div.head{
     height : auto !important;
     /*offset icon width*/
     padding-right : 1px;
+    padding-bottom : 5px;
+    line-height: 15px !important;
+    font-size: 12px !important;
+    font-family: Consolas, Lucida Console, Courier New, monospace;
 }
 
 .no-gutter > [class*='col-'] {
@@ -52,7 +56,7 @@ div.body, div.head{
 }
 
 .tag-name {
-    color: #B266AD;
+    color: #881280;
 }
 
 .attribute-name {
