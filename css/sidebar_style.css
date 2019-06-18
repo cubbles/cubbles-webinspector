@@ -67,6 +67,15 @@ div.body, div.head{
     color: #1C23A6;
 }
 
-#cubblesTreeContainer {
+#cubblesTree {
     padding-right: 2em;
 }
+
+#cubblesTreeConfigContainer {
+    padding-left: 1em;
+}
+
+#cubblesTreeContainer > hr {
+    margin: 0 !important;
+}
+
