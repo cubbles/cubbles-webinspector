@@ -81,7 +81,7 @@ div.body, div.head{
 
 .grid {
     display: grid;
-    grid-template-columns: 1fr 10px 1fr;
+    grid-template-columns: 1fr 5px 1fr;
 }
   
 .vertical-gutter {
