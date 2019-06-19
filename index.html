@@ -45,7 +45,21 @@
                     <hr>
                     <div id="cubblesTree"></div>
                 </div>
-                <div id="slotsInfo" class="panel panel-default"></div>
+                <div id=sidebar  class="panel panel-default">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" id="slotsInfoT" href="#slotsInfo">Slots Info</a></li>
+                        <li><a data-toggle="tab" id="tagInitT" href="#tagInit">TAG init</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="slotsInfo"class="tab-pane fade in active"></div>
+                        <div id="tagInit" class="tab-pane fade">
+                            <h2>Core inits</h2>
+                            <div id="coreInitsContainer"><pre></pre></div>
+                            <h2>Core connections</h2>
+                            <div id="coreConnectionsContainer"><pre></pre></div>
+                        </div>
+                    </div>
+                </div>
                 <div class="vertical-gutter"></div>
             </div>
         </div>
