@@ -88,3 +88,8 @@ div.body, div.head{
     grid-area: 1 / 2 / 2 / 2;
     cursor: ew-resize;
 }
+
+#cubblesTreeContainer, #inspectorSidebar {
+    max-height: 85vh;
+    overflow: auto;
+}
