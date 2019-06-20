@@ -93,3 +93,8 @@ div.body, div.head{
     max-height: 85vh;
     overflow: auto;
 }
+
+.slot-init-value-element {
+    padding: 0 0 0 1em;
+    border-radius: 0px;
+}
