@@ -114,4 +114,6 @@ div.body, div.head{
 
 .slot-value-container {
     padding-left: 1em;
+    padding-top: 1em;
+    padding-bottom: 1em;
 }
