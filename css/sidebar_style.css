@@ -98,3 +98,20 @@ div.body, div.head{
     padding: 0 0 0 1em;
     border-radius: 0px;
 }
+
+.slot-value-header.collapsed:before {
+    /* symbol for "collapsed" panels */
+    content:"\e250";    /* adjust as needed, taken from bootstrap.css */
+}
+
+.slot-value-header:before {
+    /* symbol for "opening" panels */
+    font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
+    content:"\e252";    /* adjust as needed, taken from bootstrap.css */
+    font-size: 10px;
+    padding-right: 0.5em;
+}
+
+.slot-value-container {
+    padding-left: 1em;
+}
