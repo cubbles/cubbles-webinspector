@@ -1,5 +1,5 @@
 pre {
-    max-height: 40em;
+    max-height: 25em;
     overflow: auto
 }
 
@@ -14,10 +14,10 @@ pre {
 }
 
 .CodeMirror-scroll {
-    max-height: 25em;
+    max-height: 20em;
 }
 
-.body .row {
+.body .row, .bottom-border {
     border-bottom: 1px solid #ddd;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
@@ -99,12 +99,12 @@ div.body, div.head{
     border-radius: 0px;
 }
 
-.slot-value-header.collapsed:before {
+.collapse-header.collapsed:before {
     /* symbol for "collapsed" panels */
     content:"\e250";    /* adjust as needed, taken from bootstrap.css */
 }
 
-.slot-value-header:before {
+.collapse-header:before {
     /* symbol for "opening" panels */
     font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
     content:"\e252";    /* adjust as needed, taken from bootstrap.css */
