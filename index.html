@@ -47,26 +47,18 @@
                 </div>
                 <div id="inspectorSidebar"  class="panel panel-default">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a data-toggle="tab" id="slotsInfoT" href="#slotsInfo">Slots (Current)</a></li>
-                        <li><a data-toggle="tab" id="tagInitT" href="#tagInit">Slots (Initial)</a></li>
+                        <li class="active"><a data-toggle="tab" id="slotsInfoT" href="#slotsInfo">Slots</a></li>
+                        <li><a data-toggle="tab" id="tagInitT" href="#cubbleDepTreeContainer">Dependency Tree</a></li>
                     </ul>
                     <div class="tab-content">
                         <div id="slotsInfo"class="tab-pane fade in active"></div>
-                        <div id="tagInit" class="tab-pane fade">
-                            <div id="coreInitsContainer">
-                                <h2>Core inits</h2>
-                                <div class="code-container"><pre></pre></div>
-                                <span class="hidden text-muted empty-message">
-                                    There are no core inits defined using the Cubbles TAG API
-                                </span>
-                            </div>
-                            <div id="coreConnectionsContainer">
-                                <h2>Core connections</h2>
-                                <div class="code-container"><pre></pre></div>
-                                <span class="hidden text-muted empty-message">
-                                    There are no core connections defined using the Cubbles TAG API
-                                </span>
-                            </div>
+                        <div id="cubbleDepTreeContainer" class="tab-pane fade">
+                            <cubx-dep-tree-viewer cubx-webpackage-id="dep-tree-viewer@1.2.0" id="cubbleDepTree">
+                                <cubx-core-init style="display:none">
+                                    <cubx-core-slot-init slot="showTitle">true</cubx-core-slot-init>
+                                    <cubx-core-slot-init slot="height">"30em"</cubx-core-slot-init>
+                                </cubx-core-init>
+                            </cubx-dep-tree-viewer>
                         </div>
                     </div>
                 </div>
@@ -78,7 +70,7 @@
             </cubx-generic-component-viewer>
         </div>
         <div id="depsTreeViewerD" class="tab-pane fade">
-            <cubx-dep-tree-viewer cubx-webpackage-id="dep-tree-viewer@1.2.0">
+            <cubx-dep-tree-viewer cubx-webpackage-id="dep-tree-viewer@1.2.0" id="rootDepsTree">
                 <cubx-core-init style="display:none">
                     <cubx-core-slot-init slot="showTitle">true</cubx-core-slot-init>
                     <cubx-core-slot-init slot="height">"30em"</cubx-core-slot-init>
