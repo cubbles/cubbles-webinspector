@@ -5,32 +5,80 @@
     <meta charset="UTF-8">
     <title>&lt;cubx-iframe-viewer&gt; demo</title>
 
+    <script src="vendor/jquery/jquery-3.3.1.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="vendor/json-viewer/jquery.json-viewer.js"></script>
+    <script src="vendor/jstree/jstree.min.js"></script>
     <script src="/cubbles/cubx.core.rte@2.4.0/webcomponents-lite/webcomponents-lite.js"></script>
     <script src="lib/deps.js"></script>
     <script src="/cubbles/cubx.core.rte@2.4.0/crc-loader/js/main.js" data-crcinit-loadcif="true"></script>
+    <script src="vendor/codemirror-5.45.0/lib/codemirror.js"></script>
+    <script src="vendor/codemirror-5.45.0/mode/javascript/javascript.js"></script>
+    <script src="vendor/codemirror-5.45.0/addon/edit/closebrackets.js"></script>
+    <script src="vendor/codemirror-5.45.0/addon/edit/matchbrackets.js"></script>
+    <script src="vendor/splijs1.0.9/split-grid.min.js"></script>
+
+    <link rel="stylesheet" href="vendor/json-viewer/jquery.json-viewer.css">
+    <link rel="stylesheet" href="vendor/jstree/themes/default/style.min.css">
+    <link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/sidebar_style.css">
+    <link rel="stylesheet" href="vendor/codemirror-5.45.0/lib/codemirror.css" />
+
 </head>
 
 <body>
-<div class="container">
+<div class="container-fluid">
     <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" id="componentViewerT" href="#componentViewerD">Interface/Dataflow view</a></li>
-        <li><a data-toggle="tab" id="depsTreeViewerT" href="#depsTreeViewerD">Dependency Tree</a></li>
+        <li class="active"><a data-toggle="tab" id="cubblesInspectorT" href="#cubblesInspectorD">Inspector</a></li>
+        <li><a data-toggle="tab" id="componentViewerT" href="#componentViewerD">Interface/Dataflow view</a></li>
+        <li><a data-toggle="tab" id="depsTreeViewerT" href="#depsTreeViewerD">Root Dependencies Tree</a></li>
     </ul>
     <div class="tab-content">
-        <div id="componentViewerD"  class="tab-pane fade in active">
-            <cubx-generic-component-viewer cubx-webpackage-id="cubx-generic-component-viewer@1.3.4">
+        <div id="cubblesInspectorD" class="tab-pane fade in active">
+            <div class="grid">
+                <div id="cubblesTreeContainer" class="panel panel-default">
+                    <div id="cubblesTreeConfigContainer">
+                        <label>Options: </label>
+                        <label class="checkbox-inline"><input type="checkbox" id="highlightCubbleCB" checked>Highlight in DOM</label>
+                        <label class="checkbox-inline"><input type="checkbox" id="scrollToCubbleCB" checked>Scroll to Cubble</label>
+                    </div>
+                    <hr>
+                    <div id="cubblesTree"></div>
+                </div>
+                <div id="inspectorSidebar"  class="panel panel-default">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" id="slotsInfoT" href="#slotsInfo">Slots</a></li>
+                        <li><a data-toggle="tab" id="tagInitT" href="#cubbleDepTreeContainer">Dependency Tree</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="slotsInfo"class="tab-pane fade in active"></div>
+                        <div id="cubbleDepTreeContainer" class="tab-pane fade">
+                            <cubx-dep-tree-viewer cubx-webpackage-id="dep-tree-viewer@1.3.1" id="cubbleDepTree">
+                                <cubx-core-init style="display:none">
+                                    <cubx-core-slot-init slot="showTitle">true</cubx-core-slot-init>
+                                    <cubx-core-slot-init slot="height">"30em"</cubx-core-slot-init>
+                                </cubx-core-init>
+                            </cubx-dep-tree-viewer>
+                        </div>
+                    </div>
+                </div>
+                <div class="vertical-gutter"></div>
+            </div>
+        </div>
+        <div id="componentViewerD"  class="tab-pane fade">
+            <cubx-generic-component-viewer cubx-webpackage-id="cubx-generic-component-viewer@1.4.0">
             </cubx-generic-component-viewer>
         </div>
         <div id="depsTreeViewerD" class="tab-pane fade">
-            <cubx-dep-tree-viewer cubx-webpackage-id="dep-tree-viewer@1.2.0">
+            <cubx-dep-tree-viewer cubx-webpackage-id="dep-tree-viewer@1.3.1" id="rootDepsTree">
                 <cubx-core-init style="display:none">
                     <cubx-core-slot-init slot="showTitle">true</cubx-core-slot-init>
                     <cubx-core-slot-init slot="height">"30em"</cubx-core-slot-init>
                 </cubx-core-init>
             </cubx-dep-tree-viewer>
         </div>
-    </div>
 </div>
 <script src="lib/index.js"></script>
+<script src="lib/inspector.js"></script>
 </body>
 </html>
