@@ -99,11 +99,11 @@
      * @private
      */
     _clearViewer: function () {
-      d3.select('#' + this.VIEW_HOLDER_ID).html('');
+      d3.select(this.$$('#' + this.VIEW_HOLDER_ID)).html('');
     },
 
     _createTreePanel: function () {
-      var viewerDiv = d3.select('#' + this.VIEW_HOLDER_ID);
+      var viewerDiv = d3.select(this.$$('#' + this.VIEW_HOLDER_ID));
       var panel;
       panel = viewerDiv
         .append('div')

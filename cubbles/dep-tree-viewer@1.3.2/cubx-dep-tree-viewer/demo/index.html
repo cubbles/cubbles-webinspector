@@ -29,7 +29,8 @@
         <h1>&lt;cubx-dep-tree-viewer&gt; Demo</h1>
     </div>
     <div cubx-core-crc class="row">
-        <cubx-dep-tree-viewer cubx-webpackage-id="this"></cubx-dep-tree-viewer>
+        <cubx-dep-tree-viewer cubx-webpackage-id="this" id="depTree1"></cubx-dep-tree-viewer>
+        <cubx-dep-tree-viewer cubx-webpackage-id="this" id="depTree2"></cubx-dep-tree-viewer>
     </div>
 </div>
 
@@ -56,8 +57,12 @@
             depMgr._buildRawDependencyTree(deps, 'https://cubbles.world/sandbox/')
                     .then(function (depTree) {
                         depTree._rootNodes.push(depTree._rootNodes[0]);
-                        document.querySelector('cubx-dep-tree-viewer').setScale('auto');
-                        document.querySelector('cubx-dep-tree-viewer').setDepTree(depTree);
+                        let depTree1 = document.getElementById('depTree1');
+                        depTree1.setScale('auto');
+                        depTree1.setDepTree(depTree);
+                        let depTree2 = document.getElementById('depTree1');
+                        depTree2.setScale('auto');
+                        depTree2.setDepTree(depTree);
                     });
         });
     })();
